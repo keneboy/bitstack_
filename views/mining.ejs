@@ -1,0 +1,241 @@
+<%- include ('partials/dashboardHeader.ejs') %>
+<body id="page-top">
+ 
+  <div
+    id="wrapper"
+    style="
+      background-color: #121d33 !important;
+      background-image: url(images/hero-gradient.svg);
+      background-position-y: bottom;
+      background-repeat: no-repeat;
+      background-size: cover;
+    "
+  >
+    <%- include ('partials/dashboardSidetab.ejs') %>
+
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <%- include ('partials/dashboardNavTab.ejs') %>
+
+        <div class="container-fluid">
+          <div
+            class="d-sm-flex align-items-center justify-content-between mb-4"
+          >
+            <h1 class="h3 mb-0 text-gray-800">Mining plans</h1>
+          </div>
+
+          <div class="row">
+            <div class="col-xl-6 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div
+                        class="
+                          text-xs
+                          font-weight-bold
+                          text-primary text-uppercase
+                          mb-1
+                        "
+                      >
+                        Bitcoin Packages
+                      </div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="feature card" style="padding: 10px">
+                              <h5 class="title title-sm">Starter Plan</h5>
+                              <small>Price: 2,500 USD</small><br />
+                              <small>Duration: 72 hours</small><br />
+                              <small>Returns: 1.42% daily</small><br />
+                              <small>Speed: 20 TH/s</small><br />
+                              <small>MEF: 7.1%</small><br />
+
+                            
+                                <a href="/mining/btc$Starter" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+                                
+                            
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="feature card" style="padding: 10px">
+                              <h5 class="title title-sm">Basic Mining</h5>
+                              <small>Price: 10,000 USD</small><br />
+                              <small>Duration: 7 days</small><br />
+                              <small>Returns: 1.86% daily </small><br />
+                              <small>Speed: 36 TH/s </small><br />
+                              <small>MEF: 5.2%</small><br />
+
+                              
+                                <a href="/mining/btc$Basic" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="feature card" style="padding: 10px">
+                              <h5 class="title title-sm">Standard Mining</h5>
+                              <small>Price: 22,000 USD</small><br />
+                              <small>Duration: 14 days</small><br />
+                              <small>Returns: 2.02% daily </small><br />
+                              <small>Speed: 41 TH/s </small><br />
+                              <small>MEF: 4.9% </small><br />
+
+                                <a href="/mining/btc$Standard" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+
+                           
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="feature card" style="padding: 10px">
+                              <h5 class="title title-sm">Premium Mining</h5>
+                              <small>Price: 50,000 USD</small><br />
+                              <small>Duration: 30 days</small><br />
+                              <small>Returns: 2.16% daily</small><br />
+                              <small>Speed: 55 TH/s</small><br />
+                              <small>MEF: 3.9%</small><br />
+
+                                <a href="/mining/btc$Premium" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+
+                            
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="feature card" style="padding: 10px">
+                              <h5 class="title title-sm">Gold Mining</h5>
+                              <small>Price: 100,000 USD</small><br />
+                              <small>Duration: 60 days</small><br />
+                              <small>Returns: 8.16% weekly</small><br />
+                              <small>Speed: 51 TH/s</small><br />
+                              <small>MEF: 3.3%</small><br />
+
+                                <a href="/mining/btc$Gold" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+
+                          
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="feature card" style="padding: 10px">
+                              <h5 class="title title-sm">Platinum Mining</h5>
+                              <small>Price: 200,000 USD</small><br />
+                              <small>Duration: 90 days </small><br />
+                              <small>Returns: 5.12% weekly</small><br />
+                              <small>Speed: 57 TH/s</small><br />
+                              <small>MEF: 3.1%</small><br />
+
+                              <a href="/mining/btc$Platinum" class="btn btn-primary btn-sm">
+                                purchase plan
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-6 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div
+                        class="
+                          text-xs
+                          font-weight-bold
+                          text-success text-uppercase
+                          mb-1
+                        "
+                      >
+                        Ethereum Packages
+                      </div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="feature card" style="padding: 10px">
+                              <h5 class="title title-sm">Silver Plan</h5>
+                              <small>Price: 5000 USD</small><br />
+                              <small>Duration: 14 days </small><br />
+                              <small>Returns: 2.88% daily </small><br />
+
+                         
+                                <a href="/mining/eth$Silver" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+
+                         
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="feature card" style="padding: 10px">
+                              <h5 class="title title-sm">Classic Plan</h5>
+                              <small>Price: 15,000 USD </small><br />
+                              <small>Duration: 30 days </small><br />
+                              <small>Returns: 12.6% weekly </small><br />
+
+                        
+                                <a href="/mining/eth$Classic" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+
+                      
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="feature card" style="padding: 10px">
+                              <h5 class="title title-sm">Gold Plan</h5>
+                              <small>Price: 40,000 USD</small><br />
+                              <small>Duration: 30days</small><br />
+                              <small>Returns: 13.31% weekly</small><br />
+
+                                <a href="/mining/eth$Gold" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+
+                     
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Mining.Blockchain.com 2021</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+
+
+  <%- include ('partials/dashboardFooter.ejs') %>
+</body>

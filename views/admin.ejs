@@ -1,0 +1,465 @@
+<%- include ('partials/tablesHead.ejs') %>
+
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper" style="background-color: #121d33 !important; background-image: url(images/hero-gradient.svg); background-position-y: bottom; background-repeat: no-repeat; background-size: cover;">
+    <%- include('partials/adminSidebar.ejs') %>
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+        <%- include('partials/adminTopbar.ejs') %>
+
+        <div class="container-fluid">
+          <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+          <h5 class="m-0 font-weight-bold text-success">
+            <%if(error){%>
+                <%=error%> 
+            <%}%>
+          </h5>
+          <p class="mb-4">
+            Tables showing list of register users, users payment receipts and Withdraw requests
+          </p>
+
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">
+                Register Users
+              </h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table
+                  class="table table-bordered"
+                  id="dataTable"
+                  width="100%"
+                  cellspacing="0"
+                >
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Phone</th>
+                      <th>Email</th>
+                      <th colspan="2">Action</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+
+                    <%if(locals.result){%>
+                      <% Object.values(result).forEach(function(res) {%>
+
+                    <tr>
+                      <td> <%=res.id %> </td>
+                      <td> <%=res.fullname %> </td>
+                      <td><%=res.phone %></td>
+                      <td><%=res.email %></td>
+                       
+                        <td >
+                     
+                     
+                          <a href='removeuser/<%=res.id %>' class="btn btn-danger btn-sm" style="width: 100%; color: white !important;" >
+                            Delete</a>
+                      </td>
+                        
+                      <td>
+                          <button  class="btn btn-success btn-sm" data-toggle="modal"  data-target="#topup<%=res.id%>"
+                            style="width: 100%; color: white !important;" >
+                            Top up</button>
+                      </td>
+                    
+
+                    </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div
+                    class="modal fade"
+                    id="topup<%=res.id%>"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="<%= res.id %>"
+                    aria-hidden="true" >
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="<%= res.id %>">TOP UP USER</h5>
+                          <button
+                            class="close"
+                            type="button"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">×</span>
+                          </button>
+                        </div>
+
+                        <div class="modal-body">
+                          <div class="card">
+                            <div class="card-body">
+                              
+                              <form action="/topup" class="form-control" enctype="multipart/form-data" method="POST" >
+
+
+                                <div class="form-group">
+
+                                  <input type="hidden" value="<%= res.id %>" name="user_id" />
+
+                                  <label>Enter Amount</label>
+                                  <input type="number" required="required" class="form-control" name="amt" />
+
+                                </div>
+
+                                <!-- <div class="form-group">
+                                  <input type="hidden" value="<%= res.id %>" name="user_id" />
+
+                                  <label>Select Picture</label>
+                                  <input type="file" required="required" class="form-control" name="receipt" />
+                                </div>
+
+
+                                <div class="form-group">
+                                  <label>Select a package</label>
+                                  <select name="packages" required class="form-control">
+                                    <option value="btc$Starter"> BTC/Starter </option>
+                                    <option value="btc$Basic"> BTC/Basic </option>
+                                    <option value="btc$Standard"> BTC/Standard </option>
+                                    <option value="btc$Premium"> BTC/Premium </option>
+                                    <option value="eth$Silver"> ETH/Silver </option>
+                                    <option value="eth$Classic"> ETH/Classic </option>
+                                    <option value="eth$Gold"> ETH/Gold </option>
+                                  </select>
+                                </div> -->
+                        
+                                  <button class="btn btn-primary" type="submit" style="width: 100%;"> TOP UP </button>
+                             
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="modal-footer">
+                         
+                        </div>
+                      </div>
+                    </div>
+                  
+                  </div>
+
+                    <%})%>
+                    <%}%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          
+          
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">
+                Payment Plans
+              </h6>
+              
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table
+                  class="table table-bordered table-light"
+                  id="dataTable"
+                  width="100%"
+                  cellspacing="0"
+                >
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Package</th>
+                      <th>Deposit</th>
+                      <th>Due Date</th>
+                      <th>Status</th>
+                      <th>Image</th>
+                      <th >Action1</th>
+                      <th >Action2</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+
+                    <%if(locals.receipts){%>
+                      <% Object.values(receipts).forEach(function(res) {%>
+
+                    <tr>
+                      <td> <%=res.user_id %> </td>
+                      <td> <%=res.package.split("$") %> </td>
+                      <td>
+                        <script>
+                          var today = new Date(`<%= res.depositdate %>`);
+                          var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+
+                          if("<%= res.status %>" == "Active"){
+                            document.write(date)
+                            
+                          }else if("<%= res.status %>" == "pending"){
+                            
+                            document.write("")
+                          }else{
+                            document.write(`Completed ${date}`)
+
+                          }
+                        </script>
+                      </td>
+
+                      <td>
+                        <script>
+                          var todays = new Date(`<%= res.duedate %>`);
+                          var dates = todays.getFullYear() + '-' + (todays.getMonth() + 1) + '-' + todays.getDate()
+                          if("<%= res.status %>" === "Active"){
+
+                            document.write(dates)
+                          }else if("<%= res.status %>" == "pending"){
+                            
+                            document.write("")
+                          }else{
+                            document.write(`Completed ${dates}`)
+
+                          }
+                        </script>
+                      </td>
+                      <td><%=res.status %></td>
+                      <td > <button data-toggle="modal"  data-target="#receipts<%= res.id %>" class="btn btn-success btn-sm"> View</button>  </td>
+                      
+
+
+
+                      <td  style="font-size: x-small;" id="app<%= res.id %>">
+                        <a id="href<%= res.id %>" style="color: white;"></a>
+                        <script>
+                          
+                          if("<%= res.status %>" == "Active"){
+                            document.getElementById("app<%= res.id %>").setAttribute("class", "btn btn-success btn-sm")
+                            document.getElementById("href<%= res.id %>").innerText = "Approved"
+                          }else if("<%= res.status %>" === "pending"){
+                            document.getElementById("href<%= res.id %>").setAttribute("href", "/approveplan/<%= res.id %>/<%= res.user_id %>/<%= res.package %>")
+                            document.getElementById("app<%= res.id %>").setAttribute("class", "btn btn-primary btn-sm")
+                            document.getElementById("href<%= res.id %>").innerText = "wating approval"
+                            
+                          }else{
+                            document.getElementById("app<%= res.id %>").setAttribute("disabled", "disable")
+                            document.getElementById("href<%= res.id %>").innerText = "Completed"
+
+                          }
+                        </script>
+                      </td> 
+
+                      <td>
+                        <a class="btn btn-sm btn-danger" href="/deletePlans/<%=res.id %>/<%=res.user_id %>"> Delete</a>
+                      </td>
+                    </tr>
+
+                    <div
+                      class="modal fade"
+                      id="receipts<%= res.id %>"
+                      tabindex="-1"
+                      role="dialog"
+                      aria-labelledby="top<%= res.id %>"
+                      aria-hidden="true"
+                    >
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="top<%= res.id %>">Payment receipts</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              <img src="<%= res.receiptImg %>"  class="img-fluid"/>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    
+
+                    <%})%>
+                    <%}%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">
+                Email Messages
+              </h6>
+              <p class="mb-4">
+                Tables showing list of users or visitors who sent message via the contact form in the home page
+                
+              </p>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table
+                  class="table table-bordered"
+                  id="dataTable"
+                  width="100%"
+                  cellspacing="0"
+                >
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Phone</th>
+                      <th>Email</th>
+                      <th>Subject</th>
+                      <th >Message</th>
+                      <th colspan="2">Action</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+
+                    <%if(locals.newletter){%>
+                      <% Object.values(newletter).forEach(function(res) {%>
+
+                    <tr>
+                      <td> <%=res.name %> </td>
+                      <td><%=res.phone %></td>
+                      <td><%=res.email %></td>
+                      <td> <%=res.subject %> </td>
+                      <td> <%=res.message %> </td>
+                       
+                        <td >
+                     
+                     
+                          <a href='removemsg/<%=res.id %>' class="btn btn-danger btn-sm" style="width: 100%; color: white !important;" >
+                            Delete</a>
+                      </td>
+                    
+
+                    </tr>
+
+                    <%})%>
+                    <%}%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+       
+       
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">
+                Withdrawal Request
+              </h6>
+              <p class="mb-4"> Tables showing list of Withdrawal request </p>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table
+                  class="table table-bordered"
+                  id="dataTable"
+                  width="100%"
+                  cellspacing="0"
+                >
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>wallet</th>
+                      <th>Phone</th>
+                      <th>Email</th>
+                      <!-- <th >Message</th> -->
+                      <!-- <th colspan="2">Action</th> -->
+                    </tr>
+                  </thead>
+                
+                  <tbody>
+
+                    <%if(locals.withResponse){%>
+                      <% Object.values(withResponse).forEach(function(res) {%>
+
+                    <tr>
+                      <td> <%=res.fullname %> </td>
+                      <td> <%=res.wallet %> </td>
+                      <td><%=res.phone %></td>
+                      <td><%=res.email %></td>
+                      <!-- <td> <%=res.wallet %> </td> -->
+                       
+                        <!-- <td >
+                     
+                     
+                          <a href='removemsg/<%=res.id %>' class="btn btn-danger btn-sm" style="width: 100%; color: white !important;" >
+                            Delete</a>
+                      </td> -->
+                    
+
+                    </tr>
+
+                    <%})%>
+                    <%}%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+     
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Mining.Blockchain.com 2021</span>
+            </div>
+        </div>
+    </footer>
+    </div>
+  </div>
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <%- include ('partials/tablesFooter.ejs') %>
+</body>
