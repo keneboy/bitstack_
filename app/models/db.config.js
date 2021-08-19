@@ -8,12 +8,12 @@ const sql = require("mysql");
 //   database: "alldb",
 // });
 
-// const connection = sql.createPool({
-//   host: "us-cdbr-east-02.cleardb.com",
-//   user: "bb8ef33c9ae33e",
-//   password: "c568b81f",
-//   database: "heroku_b311741948eae95",
-// });
+const connection = sql.createPool({
+  host: "us-cdbr-east-02.cleardb.com",
+  user: "bb8ef33c9ae33e",
+  password: "c568b81f",
+  database: "heroku_b311741948eae95",
+});
 
 connection.query(
   "CREATE TABLE IF NOT EXISTS miningusers(id int(11) AUTO_INCREMENT NOT NULL, fullname TEXT(1000) NOT NULL, username TEXT(1000) NULL, phone TEXT(1000) NOT NULL, email TEXT(1000) NOT NULL, bonus TEXT(1000) NULL, password TEXT(1000) NOT NULL, repeat_password TEXT(1000) NOT NULL, PRIMARY KEY(id))",
