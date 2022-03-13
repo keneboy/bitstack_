@@ -19,8 +19,8 @@ app.use(flash());
 app.use(session({ secret: "fgnodsfighosfighoghvu", store: sessionStore, resave: false, saveUninitialized: false }))
 app.use(passport.initialize());
 app.use(passport.session());
-require("./app/routers/routers")(app); 
-require('./app/models/db.config');
+require("../app/routers/routers")(app); 
+require('../app/models/db.config');
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {    console.log('server started successfully')});
 
