@@ -14,16 +14,74 @@
        
 
           <div class="container-fluid">
-            <div
-              class="d-sm-flex align-items-center justify-content-between mb-4"
-            >
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
               <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-              <a href="/mining" class="btn btn-sm btn-primary shadow-sm"
-                ><i class="fas fa-eye fa-sm text-white-50"></i> View plans</a
-              >
+              <%if(error){%>
+                <h5 style="color: red;"><%=error%></h5>
+              <%}%>
+              <!-- <a href="/mining" class="btn btn-sm btn-info shadow-sm" >
+                <i class="fas fa-eye fa-sm text-white-50"></i> Invest
+              </a> -->
+              <a href="/invest" class="btn btn-sm btn-info shadow-sm" >
+                <i class="fas fa-eye fa-sm text-white-50"></i> Invest
+              </a>
+              <!-- <a href="/mining" class="btn btn-sm btn-primary shadow-sm" >
+                <i class="fas fa-eye fa-sm text-white-50"></i> Top Up Account
+              </a> -->
             </div>
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+              <a type="button" class="btn btn-sm btn-info shadow-sm" data-toggle="modal"  data-target="#accountdeposit">
+                <!-- <i class="fas fa-dollar-sign text-white-50"></i> -->
+                 Account Deposit</a>
+            </div>
+            <!-- <div class="d-sm-flex align-items-center justify-content-between mb-2">
+              <a hrefx="/mining" class="btn btn-sm btn-info shadow-sm">
+                Account Withdraw</a>
+            </div> -->
 
             <div class="row">
+
+              <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                          Account Balance
+                        </div>
+                        <div class="row no-gutters align-items-center">
+                          <div class="col-auto">
+                            <div
+                              class="h6 mb-0 mr-3 font-weight-bold text-gray-800"
+                            >
+
+                          <%if(locals.userDataInput){%>
+                            <% Object.values(userDataInput).forEach(function(res) {%>
+                      
+                              <h6> Bitcoin  <b> $<%=res.btcacc%> </b> </h6>
+                              <h6> Ethereum <b>  $<%=res.ethacc%> </b> </h6>
+                              <h6> Dogecoin <b>   $<%=res.dogeacc%> </b> </h6>
+                              <h6> Cadano <b>   $<%=res.cadacc%> </b> </h6>
+
+                        
+                          <%})%>
+                          <%}else{%>
+                            $000
+                          <%}%>
+
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <div class="col-auto">
+                        <i class="fas fa-dollar-sign fa-2x text-gray-300"
+                        ></i>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
@@ -33,7 +91,7 @@
                         <div
                           class="text-xs font-weight-bold text-primary text-uppercase mb-1"
                         >
-                          Available Balance
+                          Mining Balance
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                          
@@ -94,12 +152,34 @@
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                           Completed Plans
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                          <%if(completedCounter){%>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800 completedPlan">
+                          <!-- <%if(completedCounter){%>
                             <%=completedCounter%>
                         <%}else{%>
                           0
-                          <%}%>
+                          <%}%> -->
+                          <script>
+                            let completedTask = parseFloat(`<%=completedTask%>`)
+                            let completedCounter = parseFloat(`<%=completedCounter%>`);
+                            let completedPlans = 0;
+                            if(completedTask && completedCounter){
+                              completedPlans+=(completedTask + completedCounter)
+                              document.write(completedPlans)
+                            }
+                            else if (completedTask && !completedCounter ){
+                              completedPlans+=completedTask;
+                              document.write(completedPlans)
+                            }
+                            else if (completedCounter && !completedTask){
+                              completedPlans+=completedCounter;
+                              document.write(completedPlans)
+                            }
+                            else{
+                              document.write(completedPlans)
+                            }
+                           
+
+                          </script>
                         </div>
                       </div>
                       <div class="col-auto">
@@ -157,12 +237,12 @@
               </div>
 
               <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card border-left-primary shadow h-100 py-2">
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
                       <div class="col mr-2">
                         <div
-                          class="text-xs font-weight-bold text-warning text-uppercase mb-1"
+                          class="text-xs font-weight-bold text-primary text-uppercase mb-1"
                         >
                           Pending Requests
                         </div>
@@ -186,13 +266,27 @@
           </div>
 
 
+         
+
+
+
+        
+
+
+
+
+
+
+
+
+
           <div class="container-fluid">
             <p id="www"  hidden>Referal link copied to clipboard</p>
             <p>Your Referal Link: </p>
             <div class="row">
               <div class="col-xl-9 col-md-9 col-9">
                 <%if(referalID){%>
-                  <input class="btn btn-sm btn-primary" value='https://mining-blockchain.com/login/<%=referalID%>'  id="myInput" type="text"  style="width: 100%; "/>
+                  <input class="btn btn-sm btn-primary" value='https://bitstackx.com/register/<%=referalID%>'  id="myInput" type="text"  style="width: 100%; "/>
                 
                 <%}%>
               </div>
@@ -221,10 +315,24 @@
           </div>
 
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <footer class="sticky-footer bg-white">
           <div class="container my-auto">
             <div class="copyright text-center my-auto"> 
-              <span>Copyright &copy; Mining.Blockchain.com 2021</span>
+              <span>Copyright &copy; bitstackx.com 2021</span>
             </div>
           </div>
         </footer>
@@ -236,5 +344,347 @@
 
    
 
+    <div
+    class="modal fade"
+    id="accountdeposit"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="accountdeposit"
+    aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="1">Account Deposit</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+
+              <center>
+                <button data-toggle="modal" data-target="#accountBitcoinDeposit" class="btn btn-md btn-primary mb-3">Bitcoin</button>
+              </center>
+              <center>
+                <button data-toggle="modal" data-target="#accountEtheriumDeposit" class="btn btn-md btn-warning mb-3">Ethereum</button>
+              </center>
+              <center>
+                <button data-toggle="modal" data-target="#accountDogeDeposit" class="btn btn-md btn-info mb-3">Dogecoin</button>
+              </center>
+              <center>
+                <button data-toggle="modal" data-target="#accountCadanoDeposit" class="btn btn-md btn-secondary mb-3">Cardano</button>
+              </center>
+              
+              
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+  
+  </div>
+    
+  
+  
+  
+  
+  
+  <div
+    class="modal fade"
+    id="accountBitcoinDeposit"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="accountBitcoinDeposit"
+    aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="1">Bitcoin Account Deposit</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              
+              <form action="/accountdeposit" enctype="multipart/form-data" method="POST" >
+                <div class="card">
+                  <div class="card-body">
+                    <div class="feature card" style="padding: 10px">
+
+                      <small style="text-align: center;">
+                        <span style="color: rgb(34, 34, 209);"><b> Kindly deposit </b> </span> <br />
+                        <b style="color: black;"> to: <br /> <%=bitcoinAdrr%> </b> 
+                        </small>
+
+                      <img class="img-fluid" src="<%=bitcoinImg%>" />
+                      <!-- <button class="btn btn-primary btn-sm" data-toggle="modal"
+                      data-target="#payment" > Upload Payment Receipts
+
+                      </button> -->
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <input type="number" placeholder="Enter amount deposited" required="required" class="form-control mt-3" name="amt" />
+                </div>
+                
+                <div class="form-group">
+                  <label>Upload Payment Receipts</label>
+                  <input type="hidden" name="account" value="btcacc" />
+                  <input type="file" placeholder="Upload Payment Receipts" required="required" class="form-control" name="receipt" />
+                </div>
+
+                
+                  <button class="btn btn-primary" type="submit" style="width: 100%;"> TOP UP </button>
+             
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+  
+  </div>
+
+
+
+
+ 
+  <div
+    class="modal fade"
+    id="accountEtheriumDeposit"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="accountEtheriumDeposit"
+    aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="1">Ethereum Account Deposit</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              
+              <form action="/accountdeposit" enctype="multipart/form-data" method="POST" >
+                <div class="card">
+                  <div class="card-body">
+                    <div class="feature card" style="padding: 10px">
+
+                      <small style="text-align: center;">
+                        <span style="color: rgb(34, 34, 209);"><b> Kindly deposit </b> </span> <br />
+                        <b style="color: black;"> to: <br /> <%=ethAdrr%> </b> 
+                        </small>
+
+                      <img class="img-fluid" src="<%=ethImg%>" />
+                      <!-- <button class="btn btn-primary btn-sm" data-toggle="modal"
+                      data-target="#payment" > Upload Payment Receipts
+
+                      </button> -->
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <input type="number" placeholder="Enter amount deposited" required="required" class="form-control" name="amt" />
+                </div>
+                
+                <div class="form-group">
+                  <label>Upload Payment Receipts</label>
+                  <input type="hidden" name="account" value="ethacc" />
+                  <input type="file" placeholder="Upload Payment Receipts" required="required" class="form-control" name="receipt" />
+                </div>
+
+                
+                  <button class="btn btn-primary" type="submit" style="width: 100%;"> TOP UP </button>
+             
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+  
+  </div>
+ 
+
+
+
+  <div
+    class="modal fade"
+    id="accountDogeDeposit"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="accountDogeDeposit"
+    aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="1">Dogecoin Account Deposit</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              
+              <form action="/accountdeposit" enctype="multipart/form-data" method="POST" >
+                <div class="card">
+                  <div class="card-body">
+                    <div class="feature card" style="padding: 10px">
+
+                      <small style="text-align: center;">
+                        <span style="color: rgb(34, 34, 209);"><b> Kindly deposit </b> </span> <br />
+                        <b style="color: black;"> to: <br /> <%=dogeAdrr%> </b> 
+                        </small>
+
+                      <img class="img-fluid" src="<%=ethImg%>" />
+                      <!-- <button class="btn btn-primary btn-sm" data-toggle="modal"
+                      data-target="#payment" > Upload Payment Receipts
+
+                      </button> -->
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <input type="number" placeholder="Enter amount deposited" required="required" class="form-control" name="amt" />
+                </div>
+                
+                <div class="form-group">
+                  <label>Upload Payment Receipts</label>
+                  <input type="hidden" name="account" value="dogeacc" />
+                  <input type="file" placeholder="Upload Payment Receipts" required="required" class="form-control" name="receipt" />
+                </div>
+
+                
+                  <button class="btn btn-primary" type="submit" style="width: 100%;"> TOP UP </button>
+             
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+  
+  </div>
+  <!-- Cardano -->
+  <div
+    class="modal fade"
+    id="accountCadanoDeposit"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="accountCadanoDeposit"
+    aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="1">Cadano Account Deposit</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              
+              <form action="/accountdeposit" enctype="multipart/form-data" method="POST" >
+                <div class="card">
+                  <div class="card-body">
+                    <div class="feature card" style="padding: 10px">
+
+                      <small style="text-align: center;">
+                        <span style="color: rgb(34, 34, 209);"><b> Kindly deposit </b> </span> <br />
+                        <b style="color: black;"> to: <br /> <%=cadAdrr%> </b> 
+                        </small>
+
+                      <img class="img-fluid" src="<%=cadImg%>" />
+                      <!-- <button class="btn btn-primary btn-sm" data-toggle="modal"
+                      data-target="#payment" > Upload Payment Receipts
+
+                      </button> -->
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <input type="number" placeholder="Enter amount deposited" required="required" class="form-control" name="amt" />
+                </div>
+                
+                <div class="form-group">
+                  <label>Upload Payment Receipts</label>
+                  <input type="hidden" name="account" value="cadacc" />
+                  <input type="file" placeholder="Upload Payment Receipts" required="required" class="form-control" name="receipt" />
+                </div>
+
+                
+                  <button class="btn btn-primary" type="submit" style="width: 100%;"> TOP UP </button>
+             
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+  
+  </div>
    
 <%- include ('partials/dashboardFooter.ejs') %> 

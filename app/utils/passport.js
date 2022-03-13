@@ -19,11 +19,11 @@ const db =  require("../models/models")
                     if (response === true) {
                         return done(null, { user_id: result[0].id }, { message: "Successful login" })
                     }
-                    else { return done(null, false, { message: "Incorrect Password" }) }
+                    else { return done(null, false, { message: "Incorrect email or password" }) }
                 })
               }
               else {
-                 return done(null, false, { message: "Incorrect email " }) 
+                 return done(null, false, { message: "Incorrect email or password" }) 
 
               }
             }
@@ -45,7 +45,7 @@ const db =  require("../models/models")
         email: username,
         password: password,
       };
-      console.log(adminObj)
+      // console.log(adminObj)
       await db.checkAdmin(adminObj, async (err, result) => {
         if (err) {
           done(err);
@@ -65,7 +65,7 @@ const db =  require("../models/models")
               }
             });
           } else {
-            return done(null, false, { message: "Incorrect email " });
+            return done(null, false, { message: "Incorrect email" });
           }
         }
       });

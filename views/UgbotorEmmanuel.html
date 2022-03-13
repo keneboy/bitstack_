@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>Parcel Sandbox</title>
+      <meta charset="UTF-8" />
+    </head>
+    <body>
+      <div id="app"></div>
+
+      <script>
+
+        function printList(node) {
+            
+          let div = document.getElementById("app"); // Hold a reference to the div element with an id of "app"
+          let ul = document.createElement("ul"); // create a new element call ul ( unordered list )
+          let li = document.createElement("li"); // create a new element call li ( list items)
+          div.appendChild(ul); // append the created ul element to the targetted div
+
+          if (node !== null && node !== undefined) { // if the expected node object isn't null or undefine
+            Object.keys(node).forEach((key) => { // loop through all the keys of the node object
+              if (typeof node[key] !== "object" && typeof node[key] !== null && typeof node[key] !== undefined) // check if the key is  a nested objects as well
+                {
+                    li.appendChild(document.createTextNode(`${node[key]}`)) // append the value to the list element
+                }
+              if (typeof node[key] === "object")
+                {
+                  printList(node[key]) // call the function recursively
+                } 
+            });
+          }
+
+          ul.appendChild(li);
+          console.log(ul);
+          return ul;
+
+        }
+
+
+        let exampleNode = {
+          value: 0,
+          next: {
+            value: 1,
+            next: {
+              value: 2,
+              next: null,
+            },
+          },
+        };
+
+        printList(exampleNode); 
+        // test the function with the exampleNode object above, this function can be tested with various 
+        // object use cases,
+        // thank
+        // Applicant: Emmanuel Ugbotor
+        // Porfolio: http://ugbotor.tech
+        // Email: emmanuelugbotor@gmail.com
+
+      </script>
+    </body>
+  </html>
+</html>

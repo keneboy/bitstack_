@@ -22,6 +22,12 @@
             class="d-sm-flex align-items-center justify-content-between mb-4"
           >
             <h1 class="h3 mb-0 text-gray-800">Mining plans</h1>
+
+            <%if(error){%>
+                <p class="mb-4" style="color: rgb(23, 182, 23);"> 
+                <%=error%>
+                </p>
+            <%}%>
           </div>
 
           <div class="row">
@@ -53,7 +59,7 @@
                               <small>MEF: 7.1%</small><br />
 
                             
-                                <a href="/mining/btc$Starter" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+                                <a href="/invest/btc$Starter&2500" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
                                 
                             
                             </div>
@@ -69,7 +75,7 @@
                               <small>Returns: 1.86% daily </small><br />
                               <small>Speed: 36 TH/s </small><br />
                               <small>MEF: 5.2%</small><br />
-                                <a href="/mining/btc$Basic" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+                                <a href="/invest/btc$Basic&10000" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
 
                             </div>
                           </div>
@@ -85,7 +91,7 @@
                               <small>Speed: 41 TH/s </small><br />
                               <small>MEF: 4.9% </small><br />
 
-                                <a href="/mining/btc$Standard" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+                                <a href="/invest/btc$Standard&22000" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
 
                            
                             </div>
@@ -103,7 +109,7 @@
                               <small>MEF: 3.9%</small><br />
                               
 
-                                <a href="/mining/btc$Premium" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+                                <a href="/invest/btc$Premium&50000" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
 
                             
                             </div>
@@ -119,7 +125,7 @@
                               <small>Returns: 8.16% weekly</small><br />
                               <small>Speed: 51 TH/s</small><br />
                               <small>MEF: 3.3%</small><br />
-                                <a href="/mining/btc$Gold" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+                                <a href="/invest/btc$Gold&100000" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
 
                           
                             </div>
@@ -135,7 +141,7 @@
                               <small>Returns: 5.12% weekly</small><br />
                               <small>Speed: 57 TH/s</small><br />
                               <small>MEF: 3.1%</small><br />
-                              <a href="/mining/btc$Platinum" class="btn btn-primary btn-sm">
+                              <a href="/invest/btc$Platinum&200000" class="btn btn-primary btn-sm">
                                 purchase plan
                               </a>
                             </div>
@@ -171,7 +177,7 @@
                               <small>Price: 5000 USD</small><br />
                               <small>Duration: 30 days </small><br />
                               <small>Returns: 1.66% daily </small><br />         
-                                <a href="/mining/eth$Silver" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+                                <a href="/invest/eth$Silver&5000" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
 
                          
                             </div>
@@ -185,7 +191,7 @@
                               <small>Price: 15,000 USD </small><br />
                               <small>Duration: 30 days </small><br />
                               <small>Returns: 12.6% weekly </small><br />
-                                <a href="/mining/eth$Classic" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+                                <a href="/invest/eth$Classic&15000" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
 
                       
                             </div>
@@ -200,7 +206,7 @@
                               <small>Duration: 30 days</small><br />
                               <small>Returns: 13.31% weekly</small><br />
 
-                                <a href="/mining/eth$Gold" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+                                <a href="/invest/eth$Gold&40000" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
 
                      
                             </div>
@@ -237,7 +243,7 @@
                               <small>Duration: 30 days </small><br />
                               <small>Returns: 1.25% daily </small><br />
 
-                                <a href="/mining/doge$Silver" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+                                <a href="/invest/doge$Silver&3000" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
 
                          
                             </div>
@@ -252,7 +258,7 @@
                               <small>Duration: 30 days </small><br />
                               <small>Returns: 2.1% daily </small><br />
                         
-                                <a href="/mining/doge$Classic" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+                                <a href="/invest/doge$Classic&12000" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
 
                       
                             </div>
@@ -268,7 +274,7 @@
                               <small>Returns: 2.21% daily </small><br />
 
 
-                                <a href="/mining/doge$Gold" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+                                <a href="/invest/doge$Gold&30000" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
 
                             </div>
                           </div>
@@ -304,7 +310,7 @@
                               <small>Duration: 30 days </small><br />
                               <small>Returns: 1.38% daily </small><br />
 
-                                <a href="/mining/cad$Silver" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+                                <a href="/invest/cad$Silver&2000" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
 
                          
                             </div>
@@ -319,7 +325,7 @@
                               <small>Duration: 30 days </small><br />
                               <small>Returns: 1.96% Daily </small><br />
                         
-                                <a href="/mining/cad$Classic" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+                                <a href="/invest/cad$Classic&5000" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
 
                       
                             </div>
@@ -334,7 +340,7 @@
                               <small>Duration: 30days</small><br />
                               <small>Returns: 2.12% Daily </small><br />
 
-                                <a href="/mining/cad$Standard" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+                                <a href="/invest/cad$Standard&14000" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
 
                             </div>
                           </div>
@@ -347,7 +353,7 @@
                               <small>Duration: 30days</small><br />
                               <small>Returns: 2.28% Daily </small><br />
 
-                                <a href="/mining/cad$Gold" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
+                                <a href="/invest/cad$Gold&25000" class="btn btn-primary btn-sm" style="color: white;"> purchase plan</a>
 
                             </div>
                           </div>

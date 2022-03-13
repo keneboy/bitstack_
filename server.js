@@ -4,8 +4,8 @@ const flash = require("connect-flash")
 const session = require("express-session")
 const passport = require("passport")
 const MySQLStore = require("express-mysql-session")(session);
-// const options = { host: "localhost", user: "root", database: 'alldb', password:''}
-var options = { host: 'us-cdbr-east-02.cleardb.com', user: 'bb8ef33c9ae33e', database: 'heroku_b311741948eae95', password: 'c568b81f' } // production database
+const options = { host: "localhost", user: "root", database: 'alldb', password:''}
+// var options = { host: 'us-cdbr-east-02.cleardb.com', user: 'bb8ef33c9ae33e', database: 'heroku_b311741948eae95', password: 'c568b81f' } // production database
 
 const sessionStore = new MySQLStore(options);
 const fileupload = require("express-fileupload");

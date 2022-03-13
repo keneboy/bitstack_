@@ -1,69 +1,74 @@
 const { Packages } = require("../utils/packages");
 const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 
-exports.packagesPlans = (result) => {
+exports.packagesPlans = async (result) => {
   let pending = [];
   let running = [];
-  let runningCounter ,completedCounter, runningTotalAmt= 0;
-
-  for (var obj of result) {
-    obj.status == "pending" ? pending.push(obj) : running.push(obj);
+  var runningCounter=0 ,completedCounter=0, runningTotalAmt= 0;
+  if(result && Object.entries(result).length !== 0){
+    for (var obj of result) { obj.status == "pending" ? pending.push(obj) : running.push(obj) }
   }
+  
   if (running.length) {
+    
     runningCounter = running.length;
+    
     for (var i = 0; i < running.length; i++) {
       let { Price, Duration, Returns } =
-        Packages[running[i].package.split("$")[0]][
-          running[i].package.split("$")[1]
-        ];
+      Packages[running[i].package.split("$")[0]][
+        running[i].package.split("$")[1]
+      ];
       running[i].Price = Price;
       running[i].Duration = Duration;
       running[i].Returns = Returns;
       running[i].package = running[i].package
-        .split("$")[0]
-        .toUpperCase()
-        .concat(`$${running[i].package.split("$")[1]}`);
-
+      .split("$")[0]
+      .toUpperCase()
+      .concat(`$${running[i].package.split("$")[1]}`);
+      
       var today = new Date();
-      var now =
-        today.getFullYear() +
-        "-" +
-        (today.getMonth() + 1) +
-        "-" +
-        today.getDate();
-
-      var due_date = new Date(running[i].duedate);
-      runningTotalAmt += runningTotalAmt += returnOfInvestment(
+      var now = today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getDate();
+      
+      // var due_date = new Date(running[i].duedate);
+      var due_date =  new Date(parseFloat(running[i].countDownDate))       
+      runningTotalAmt += returnOfInvestment(
         running[i].Duration,
         running[i].Returns,
         running[i].Price,
         now,
         due_date
-      );
-      ExpireddDate =
+        );
+        
+        ExpireddDate =
         due_date.getFullYear() +
         "-" +
         (due_date.getMonth() + 1) +
         "-" +
+
         due_date.getDate();
-
-      if (ExpireddDate < now) {
-        completedCounter++;
-        runningTotalAmt = 0;
-        running[i].status = "Completed";
-        runningCounter = 0;
-        runningTotalAmt += returnOfInvestment(
-          running[i].Duration,
-          running[i].Returns,
-          running[i].Price,
-          now,
-          due_date
-        );
-      }
-    }
-  }
-
-  return {
+        
+        // if (ExpireddDate < now) {
+          if (due_date < today) {
+            completedCounter++;
+            runningTotalAmt = 0;
+            running[i].status = "Completed";
+            runningCounter -= 1;
+            runningTotalAmt += returnOfInvestment(
+              running[i].Duration,
+              running[i].Returns,
+              running[i].Price,
+              now,
+              due_date
+              );
+              // runningTotalAmt += returnRunningTime(runningTotalAmt, amountDeducted)
+            }
+          }
+        }
+        return {
     pending,
     running,
     runningCounter,
@@ -73,7 +78,10 @@ exports.packagesPlans = (result) => {
   };
 };
 
-
+// function returnRunningTime(runningTotalAmt, amountDeducted){
+//  const value = runningTotalAmt - amountDeducted;
+//  return value;
+// }
 
 
 const returnOfInvestment = (
@@ -112,14 +120,14 @@ function dateDiffInDays(a, b) {
   return Math.floor((utc2 - utc1) / _MS_PER_DAY);
 }
 
-exports.validateWithdrawalRequest=(result)=>{
-  let outPut = {};
-  for(var i=0; i< result.length; i++){
-    if(result[i].status == "Completed"){
-      outPut = result
-    }
+exports.validateWithdrawalRequest=async(result)=>{
+  let outPut = [];
+  if(result){
+    result.forEach(element => {
+       if(element.status == "Completed" ){
+            outPut.push(element)
+      }
+    });
   }
-
   return  {outPut}
-  
 }

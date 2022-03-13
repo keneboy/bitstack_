@@ -22,7 +22,7 @@
                             <div class="container-fluid">
 
                                 <!-- Page Heading -->
-                                <h1 class="h3 mb-2 text-gray-800"> Running Plans </h1>
+                                <h1 class="h3 mb-2 text-gray-800"> MY INVESTMENTS </h1>
                                 <%if(error){%>
 
                                     <p class="mb-4" style="color: rgb(23, 182, 23);">
@@ -75,10 +75,10 @@
                                                                         <td>
                                                                             <%= res.Returns %>
                                                                         </td>
-
                                                                         <td>
                                                                             <a class="btn btn-primary btn-sm" href="/removeplan/<%= res.id %>">Delete</a>
                                                                         </td>
+                                                                       
                                                                     </tr>
                                                                     <%})%>
                                                                         <%}%>
@@ -108,26 +108,29 @@
                                                                                             </script>
                                                                                         </td>
                                                                                         <td id="<%= res.id %>">
-
+                                                                                            
                                                                                             <script>
-                                                                                                    
-                                                                                                
                                                                                                 // console.log(countDownDate - new Date().getTime())
                                                                                                 var x = setInterval(function () {
-                                                                                                    var countDownDate = new Date(`<%= res.duedate %>`).getTime();
+                                                                                                    // var countDownDate = new Date(`<%= res.duedate %>`).getTime();
+                                                                                                   let countDownDate = parseFloat(`<%= res.countDownDate %>`)
+                                                                                                    
                                                                                                         var now = new Date().getTime();
-
-                                                                                                        var distance = countDownDate- now;
+                    
+                                                                                                        var distance = countDownDate - now;
 
                                                                                                         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
                                                                                                         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                                                                                                         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                                                                                                         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                                                                                                        let nowDate =  days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-                                                                                                        document.getElementById("<%= res.id %>").innerHTML = nowDate
+                                                                                                        var nowDate =  days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+                                                                                                       
                                                                                                         if (distance < 0) {
-                                                                                                            clearInterval(x);
+                            
                                                                                                             document.getElementById("<%= res.id %>").innerHTML = "Completed"
+                                                                                                        }
+                                                                                                        else{
+                                                                                                            document.getElementById("<%= res.id %>").innerHTML = nowDate
                                                                                                         }
                                                                                                     }, 1000);
                                                                                             </script>
@@ -136,10 +139,10 @@
                                                                                         <td>
                                                                                             <%= res.Returns %>
                                                                                         </td>
-
                                                                                         <td>
                                                                                             <a class="btn btn-primary btn-sm" href="/removeplan/<%= res.id %>">Delete</a>
                                                                                         </td>
+                                                                                      
                                                                                         
                                                                                     </tr>
                                                                                     <%})%>
@@ -156,7 +159,7 @@
                     <footer class="sticky-footer bg-white">
                         <div class="container my-auto">
                             <div class="copyright text-center my-auto">
-                                <span>Copyright &copy; Mining.Blockchain.com 2021</span>
+                                <span>Copyright &copy; bitstackx.com 2021</span>
                             </div>
                         </div>
                     </footer>

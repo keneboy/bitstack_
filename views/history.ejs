@@ -1,0 +1,929 @@
+<%- include ('partials/dashboardHeader.ejs') %> 
+  <body id="page-top">
+    <div id="wrapper" style="background-color: #121d33 !important; background-image: url(images/hero-gradient.svg); background-position-y: bottom; background-repeat: no-repeat; background-size: cover;">
+ 
+      <%- include ('partials/dashboardSidetab.ejs') %>
+
+     
+      <div id="content-wrapper" class="d-flex flex-column">
+     
+        <div id="content">
+       
+      <%- include ('partials/dashboardNavTab.ejs') %>
+       
+
+          <div class="container-fluid">
+
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+              <h1 class="h3 mb-0 text-gray-800">Transaction History</h1>
+              <%if(error){%>
+                <h5 style="color: red;"><%=error%></h5>
+              <%}%>
+              <a href="/invest" class="btn btn-sm btn-info shadow-sm" >
+                <i class="fas fa-eye fa-sm text-white-50"></i> Invest
+              </a>
+              <!-- <a href="/mining" class="btn btn-sm btn-primary shadow-sm" >
+                <i class="fas fa-eye fa-sm text-white-50"></i> Top Up Account
+              </a> -->
+            </div>
+            
+
+          </div>
+
+
+         
+
+
+
+              
+        
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">
+                BITCOIN HISTORY
+              </h6>
+              
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table
+                  class="table table-bordered table-light"
+                  id="dataTable"
+                  width="100%"
+                  cellspacing="0"
+                >
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Amount</th>
+                      <th>Deposit Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+
+                    <%if(locals.btcRes){%>
+                      <% Object.values(btcRes).forEach(function(res) {%>
+
+                    <tr>
+                      <td> <%=res.id %> </td>
+                      <td> <%=res.amt %> </td>
+                      <td>
+                      <script>
+                          var todays = new Date(`<%= res.depositdate %>`);
+                          var dates = todays.getFullYear() + '-' + (todays.getMonth() + 1) + '-' + todays.getDate()
+                          document.write(dates)
+                      </script>
+                      </td>
+                      <td>
+                      <script>
+                          if(`<%=res.status %>` == 'Active'){
+                            document.write("Paid")
+                          }else{
+                            document.write("Pending Approval")
+                          }
+                          
+                      </script>
+                      
+                      </td>
+                      <!-- <td> <button data-toggle="modal"  data-target="#btc<%= res.id %>" class="btn btn-success btn-sm"> View</button>  </td>
+                      
+
+                      <td>
+                        <a class="btn btn-sm btn-danger" hrefs="/deletePlans/<%=res.id %>/<%=res.user_id %>"> Delete</a>
+                      </td> -->
+                    </tr>
+
+                    <div
+                      class="modal fade"
+                      id="btc<%= res.id %>"
+                      tabindex="-1"
+                      role="dialog"
+                      aria-labelledby="top<%= res.id %>"
+                      aria-hidden="true"
+                    >
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="top<%= res.id %>">Bitcoin Payment receipts</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              <img src="<%= res.receiptImg %>"  class="img-fluid"/>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+                    </div>
+                    <%})%>
+                    <%}%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+
+    
+         
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">
+                ETHEREUM HISTORY
+              </h6>
+              
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table
+                  class="table table-bordered table-light"
+                  id="dataTable"
+                  width="100%"
+                  cellspacing="0"
+                >
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Amount</th>
+                      <th>Deposit Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+
+                    <%if(locals.ethRes){%>
+                      <% Object.values(ethRes).forEach(function(res) {%>
+
+                    <tr>
+                      <td> <%=res.id %> </td>
+                      <td> <%=res.amt %> </td>
+                      <td>
+                      <script>
+                          var todays = new Date(`<%= res.depositdate %>`);
+                          var dates = todays.getFullYear() + '-' + (todays.getMonth() + 1) + '-' + todays.getDate()
+                          document.write(dates)
+                      </script>
+                      </td>
+                      <td>
+                        <script>
+                          if(`<%=res.status %>` == 'Active'){
+                            document.write("Paid")
+                          }else{
+                            document.write("Pending Approval")
+                          }
+                      </script>
+                        </td>
+                      <!-- <td > <button data-toggle="modal"  data-target="#eth<%= res.id %>" class="btn btn-success btn-sm"> View</button>  </td>
+                      
+
+                      <td>
+                        <a class="btn btn-sm btn-danger" hrefs="/deletePlans/<%=res.id %>/<%=res.user_id %>"> Delete</a>
+                      </td> -->
+                    </tr>
+
+                    <div
+                      class="modal fade"
+                      id="eth<%= res.id %>"
+                      tabindex="-1"
+                      role="dialog"
+                      aria-labelledby="top<%= res.id %>"
+                      aria-hidden="true"
+                    >
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="top<%= res.id %>">Ethereum Payment receipts</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              <img src="<%= res.receiptImg %>"  class="img-fluid"/>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+                    </div>
+                    <%})%>
+                    <%}%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+         
+         
+         
+         
+         
+         
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">
+                DOGECOIN HISTORY
+              </h6>
+              
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table
+                  class="table table-bordered table-light"
+                  id="dataTable"
+                  width="100%"
+                  cellspacing="0"
+                >
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Amount</th>
+                      <th>Deposit Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+
+                    <%if(locals.dogeRes){%>
+                      <% Object.values(dogeRes).forEach(function(res) {%>
+
+                    <tr>
+                      <td> <%=res.id %> </td>
+                      <td> <%=res.amt %> </td>
+                      <td>
+                      <script>
+                          var todays = new Date(`<%= res.depositdate %>`);
+                          var dates = todays.getFullYear() + '-' + (todays.getMonth() + 1) + '-' + todays.getDate()
+                          document.write(dates)
+                      </script>
+                      </td>
+                      <td>
+                        
+                      <script>
+                         if(`<%=res.status %>` == 'Active'){
+                            document.write("Paid")
+                          }else{
+                            document.write("Pending Approval")
+                          }
+                      </script>
+                      </td>
+                      <!-- <td > <button data-toggle="modal"  data-target="#doge<%= res.id %>" class="btn btn-success btn-sm"> View</button>  </td>
+                     
+
+                      <td>
+                        <a class="btn btn-sm btn-danger" hrefs="/deletePlans/<%=res.id %>/<%=res.user_id %>"> Delete</a>
+                      </td> -->
+                    </tr>
+
+                    <div
+                      class="modal fade"
+                      id="doge<%= res.id %>"
+                      tabindex="-1"
+                      role="dialog"
+                      aria-labelledby="top<%= res.id %>"
+                      aria-hidden="true"
+                    >
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="top<%= res.id %>">Doge Payment receipts</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              <img src="<%= res.receiptImg %>"  class="img-fluid"/>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    
+
+                    <%})%>
+                    <%}%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">
+                CADANO HISTORY
+              </h6>
+              
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table
+                  class="table table-bordered table-light"
+                  id="dataTable"
+                  width="100%"
+                  cellspacing="0"
+                >
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Amount</th>
+                      <th>Deposit Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+
+                    <%if(locals.cadRes){%>
+                      <% Object.values(cadRes).forEach(function(res) {%>
+
+                    <tr>
+                      <td> <%=res.id %> </td>
+                      <td> <%=res.amt %> </td>
+                      <td>
+                      <script>
+                          var todays = new Date(`<%= res.depositdate %>`);
+                          var dates = todays.getFullYear() + '-' + (todays.getMonth() + 1) + '-' + todays.getDate()
+                          document.write(dates)
+                      </script>
+                      </td>
+                      <td>
+                        
+                      <script>
+                         if(`<%=res.status %>` == 'Active'){
+                            document.write("Paid")
+                          }else{
+                            document.write("Pending Approval")
+                          }
+                      </script>
+                      </td>
+                      <!-- <td > <button data-toggle="modal"  data-target="#doge<%= res.id %>" class="btn btn-success btn-sm"> View</button>  </td>
+                     
+
+                      <td>
+                        <a class="btn btn-sm btn-danger" hrefs="/deletePlans/<%=res.id %>/<%=res.user_id %>"> Delete</a>
+                      </td> -->
+                    </tr>
+
+                    <div
+                      class="modal fade"
+                      id="cad<%= res.id %>"
+                      tabindex="-1"
+                      role="dialog"
+                      aria-labelledby="top<%= res.id %>"
+                      aria-hidden="true"
+                    >
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="top<%= res.id %>">Doge Payment receipts</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              <img src="<%= res.receiptImg %>"  class="img-fluid"/>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    
+
+                    <%})%>
+                    <%}%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">
+                PAYMENT HISTORY
+              </h6>
+              
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table
+                  class="table table-bordered table-light"
+                  id="dataTable"
+                  width="100%"
+                  cellspacing="0"
+                >
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Amount</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+
+                    <%if(locals.paymentHistoryRes){%>
+                      <% Object.values(paymentHistoryRes).forEach(function(res) {%>
+
+                    <tr>
+                      <td> <%=res.id %> </td>
+                      <td> <%=res.amount %> </td>
+                      <td id="phistory<%=res.id %>">
+                      <!-- <%=res.approvedDate %> -->
+                      <script>
+                      document.getElementById("phistory<%=res.id %>").innerHTML = '<%=res.approvedDate %>'.split("GMT")[0]
+                      </script>
+                      </td>
+                      <td id="status<%=res.id %>">
+                        
+                      <script>
+                         if(`<%=res.status %>` === 'pending'){
+                          document.getElementById("status<%= res.id %>").style.color = "red";
+                          document.getElementById("status<%= res.id %>").innerHTML = `<%=res.status %>`
+                          }else{
+                            document.getElementById("status<%= res.id %>").style.color = "green";
+                            document.getElementById("status<%= res.id %>").innerHTML = `<%=res.status %>`
+                          }
+                      </script>
+                      <!-- <%=res.status %> -->
+                      </td>
+                      <!-- <td > <button data-toggle="modal"  data-target="#doge<%= res.id %>" class="btn btn-success btn-sm"> View</button>  </td>
+                     
+
+                      <td>
+                        <a class="btn btn-sm btn-danger" hrefs="/deletePlans/<%=res.id %>/<%=res.user_id %>"> Delete</a>
+                      </td> -->
+                    </tr>
+
+                    <div
+                      class="modal fade"
+                      id="cad<%= res.id %>"
+                      tabindex="-1"
+                      role="dialog"
+                      aria-labelledby="top<%= res.id %>"
+                      aria-hidden="true"
+                    >
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="top<%= res.id %>">Doge Payment receipts</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              <img src="<%= res.receiptImg %>"  class="img-fluid"/>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    
+
+                    <%})%>
+                    <%}%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+          <!-- <div class="container-fluid">
+            <p id="www"  hidden>Referal link copied to clipboard</p>
+            <p>Your Referal Link: </p>
+            <div class="row">
+              <div class="col-xl-9 col-md-9 col-9">
+                <%if(referalID){%>
+                  <input class="btn btn-sm btn-primary" value='https://bitstackx.com/register/<%=referalID%>'  id="myInput" type="text"  style="width: 100%; "/>
+                
+                <%}%>
+              </div>
+              
+            
+              <div class="col-xl-3 col-md-3 col-3">
+                <button class="btn btn-sm btn-primary" style="width: 100%;" onclick="copyLink()" title="Copied to clipboard">copy  </button>
+                <script>
+                  function copyLink(){
+                    var copyText = document.getElementById("myInput");
+                    copyText.select();
+                    copyText.setSelectionRange(0,9999);
+                    document.execCommand("copy")
+
+                    var success2 = document.getElementById("www").innerText
+                    if (document.getElementById("www").innerText !== "") {
+                    swal("", `${success2}`, "success")
+                    }
+                  
+                  }
+                </script>
+
+
+              </div>
+            </div>
+          </div> -->
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <footer class="sticky-footer bg-white">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto"> 
+              <span>Copyright &copy; bitstackx.com 2021</span>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+   
+
+    <div
+    class="modal fade"
+    id="accountdeposit"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="accountdeposit"
+    aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="1">Account Deposit</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+
+              <center>
+                <button data-toggle="modal" data-target="#accountBitcoinDeposit" class="btn btn-md btn-primary mb-3">Bitcoin</button>
+              </center>
+              <center>
+                <button data-toggle="modal" data-target="#accountEtheriumDeposit" class="btn btn-md btn-warning mb-3">Ethereum</button>
+              </center>
+              <center>
+                <button data-toggle="modal" data-target="#accountDogeDeposit" class="btn btn-md btn-info mb-3">Dogecoin</button>
+              </center>
+              
+              
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+  
+  </div>
+    
+  
+  
+  
+  
+  
+  <div
+    class="modal fade"
+    id="accountBitcoinDeposit"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="accountBitcoinDeposit"
+    aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="1">Bitcoin Account Deposit</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              
+              <form action="/accountdeposit" enctype="multipart/form-data" method="POST" >
+                <div class="card">
+                  <div class="card-body">
+                    <div class="feature card" style="padding: 10px">
+
+                      <small style="text-align: center;">
+                        <span style="color: rgb(34, 34, 209);"><b> Kindly deposit </b> </span> <br />
+                        <b style="color: black;"> to: <br /> <%=bitcoinAdrr%> </b> 
+                        </small>
+
+                      <img class="img-fluid" src="<%=bitcoinImg%>" />
+                      <!-- <button class="btn btn-primary btn-sm" data-toggle="modal"
+                      data-target="#payment" > Upload Payment Receipts
+
+                      </button> -->
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <input type="number" placeholder="Enter amount deposited" required="required" class="form-control mt-3" name="amt" />
+                </div>
+                
+                <div class="form-group">
+                  <label>Upload Payment Receipts</label>
+                  <input type="hidden" name="account" value="btcacc" />
+                  <input type="file" placeholder="Upload Payment Receipts" required="required" class="form-control" name="receipt" />
+                </div>
+
+                
+                  <button class="btn btn-primary" type="submit" style="width: 100%;"> TOP UP </button>
+             
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+  
+  </div>
+
+
+
+
+ 
+  <div
+    class="modal fade"
+    id="accountEtheriumDeposit"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="accountEtheriumDeposit"
+    aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="1">Ethereum Account Deposit</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              
+              <form action="/accountdeposit" enctype="multipart/form-data" method="POST" >
+                <div class="card">
+                  <div class="card-body">
+                    <div class="feature card" style="padding: 10px">
+
+                      <small style="text-align: center;">
+                        <span style="color: rgb(34, 34, 209);"><b> Kindly deposit </b> </span> <br />
+                        <b style="color: black;"> to: <br /> <%=ethAdrr%> </b> 
+                        </small>
+
+                      <img class="img-fluid" src="<%=ethImg%>" />
+                      <!-- <button class="btn btn-primary btn-sm" data-toggle="modal"
+                      data-target="#payment" > Upload Payment Receipts
+
+                      </button> -->
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <input type="number" placeholder="Enter amount deposited" required="required" class="form-control" name="amt" />
+                </div>
+                
+                <div class="form-group">
+                  <label>Upload Payment Receipts</label>
+                  <input type="hidden" name="account" value="ethacc" />
+                  <input type="file" placeholder="Upload Payment Receipts" required="required" class="form-control" name="receipt" />
+                </div>
+
+                
+                  <button class="btn btn-primary" type="submit" style="width: 100%;"> TOP UP </button>
+             
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+  
+  </div>
+ 
+
+
+
+  <div
+    class="modal fade"
+    id="accountDogeDeposit"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="accountDogeDeposit"
+    aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="1">Dogecoin Account Deposit</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              
+              <form action="/accountdeposit" enctype="multipart/form-data" method="POST" >
+                <div class="card">
+                  <div class="card-body">
+                    <div class="feature card" style="padding: 10px">
+
+                      <small style="text-align: center;">
+                        <span style="color: rgb(34, 34, 209);"><b> Kindly deposit </b> </span> <br />
+                        <b style="color: black;"> to: <br /> <%=ethAdrr%> </b> 
+                        </small>
+
+                      <img class="img-fluid" src="<%=ethImg%>" />
+                      <!-- <button class="btn btn-primary btn-sm" data-toggle="modal"
+                      data-target="#payment" > Upload Payment Receipts
+
+                      </button> -->
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <input type="number" placeholder="Enter amount deposited" required="required" class="form-control" name="amt" />
+                </div>
+                
+                <div class="form-group">
+                  <label>Upload Payment Receipts</label>
+                  <input type="hidden" name="account" value="dogeacc" />
+                  <input type="file" placeholder="Upload Payment Receipts" required="required" class="form-control" name="receipt" />
+                </div>
+
+                
+                  <button class="btn btn-primary" type="submit" style="width: 100%;"> TOP UP </button>
+             
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+  
+  </div>
+   
+<%- include ('partials/dashboardFooter.ejs') %> 

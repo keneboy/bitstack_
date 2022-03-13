@@ -46,19 +46,18 @@
                                                                 <th>Deposit</th>
                                                                 <th>Due date</th>
                                                                 <th>Profit %</th>
+                                                                <th>Compound Profit</th>
                                                                 <th>Action</th>
+                                                                <th>Reinvest</th>
                                                             </tr>
                                                         </thead>
 
                                                         <tbody>
 
-                                                          
-
 
                                                                             <%if(locals.outPut.length){%>
                                                                                 <% Object.values(outPut).forEach(function(res)
-                                                                                    {%>
-
+                                                                                    {%> 
 
                                                                                     <tr>
                                                                                         <td>
@@ -88,7 +87,7 @@
                                                                                                     var countDownDate = new Date(`<%= res.duedate %>`).getTime();
                                                                                                         var now = new Date().getTime();
 
-                                                                                                        var distance = countDownDate- now;
+                                                                                                        var distance = countDownDate - now;
 
                                                                                                         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
                                                                                                         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -97,7 +96,7 @@
                                                                                                         let nowDate =  days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
                                                                                                         document.getElementById("<%= res.id %>").innerHTML = nowDate
                                                                                                         if (distance < 0) {
-                                                                                                            clearInterval(x);
+                                                                                                           
                                                                                                             document.getElementById("<%= res.id %>").innerHTML = "Completed"
                                                                                                         }
                                                                                                     }, 1000);
@@ -107,17 +106,252 @@
                                                                                         <td>
                                                                                             <%= res.Returns %>
                                                                                         </td>
+                                                                                        <td>
+                                                                                            
+                                                                                            <script>
+                                                                                                let packageRate = `<%= res.Returns %>`;
+                                                                                                let package = packageRate.split(/[%]/ig);
+                                                                                                let rate = parseFloat(package[0]);
+                                                                                                let period = package[1].trim();
+                                                                                                let duration = 30;
+                                                                                                let amount = parseFloat(` <%= res.Price %>`)
+                                                                                                    let score;
+                                                                                                if(period === "daily"){
+                                                                                                     score = (((rate/ 100) * amount * duration) + amount );
+                                                                                                    // document.write(`${score + amount } USD`)
+                                                                                                }
+                                                                                                if(period === "weekly"){
+                                                                                                     score = (((rate/ 100) * amount * duration * (1/7)) + amount);
+                                                                                                    // document.write(`${score + amount } USD`)
+                                                                                                }
+                                                                                                document.write(`${score} USD`)
+                                                                                    
+                                                                                            </script>
+                                                                                         </td>
 
                                                                                         <td>
-                                                                                            <a class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#register-seller"> Withdraw  </a>
+                                                                                            <a class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#register-seller-<%= res.id %>"> Withdraw  </a>
                                                                                             
                                                                                         </td>
+                                                                                        <!-- <td > <a class="btn btn-secondary btn-sm" style="padding:5px 25px"  data-toggle="modal"  data-target='#reinvest-package-<%= res.id %>'>invest</a>
+                                                                                        </td> -->
+                                                                                        <td > <a class="btn btn-secondary btn-sm" style="padding:5px 25px"    id='reinvestPackage-<%= res.id %>'>invest</a>
+
+                                                                                            <script>
+                                                                                                 document.getElementById("reinvestPackage-<%= res.id %>").setAttribute("href", `/investPackage/<%= res.id %>/<%= res.package %>/${score}`)
+                                                                                              </script>
+                                                                                        </td>
                                                                                     </tr>
+
+                                                                                    <!--  -->
+<div class="modal fade" id="reinvest-package-<%= res.id %>">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content"><a href="#" class="modal-close" data-dismiss="modal" aria-label="Close"><em
+            class="ti ti-close"></em></a>
+        <div class="ath-container m-0">
+          <div class="ath-body">
+
+            <h5 class="ath-heading title" style="margin: 5px; padding: 5px;">Investment plan  </h5>
+
+            <form method="POST" action="/reInvestRequest" style="margin: 5px;">
+                                
+              <fieldset style="padding: 10px;">
+                <div class="form-group">
+                  <!-- <div class="field-wrap">
+                    <input type="text" name="wallet" required class="form-control input-bordered" minlength="10" placeholder="Enter wallet address">
+                  </div> -->
+                  <p><span>Crypto- Package - $Amount -  Duration</span></p>
+                  <select name="packageDetails" id="investment">
+                  </select>
+                </div>
+                <button class="form-control btn btn-success btn-block btn-md" style="width: 100%;"> invest </button>
+              </fieldset>
+
+              <script>
+    let value = `<%=res.package.split("$")[0] %>`.toLocaleLowerCase()   
+   let packages = {
+    btc:
+        [{
+            package:"Starter",
+            Price: 2500,
+            Duration: "30 days",
+            Returns: "1.42% daily",
+            Speed: "20 TH/s",
+            MEF: "7.1%"
+        },
+        {
+            package:"Basic",
+            Price: 10000,
+            Duration: "30 days",
+            Returns: "1.86% daily" ,
+            Speed: "36 TH/s",
+            MEF: "5.2%",
+        },
+        {
+            package:"Standard",
+            Price: 22000,
+            Duration: "30 days",
+            Returns: "2.02% daily",
+            Speed: "41 TH/s",
+            MEF: "4.9%",
+        },
+        {
+            package:"Premium",
+            Price: 50000,
+            Duration: "30 days",
+            Returns: "2.16% daily",
+            Speed: "55 TH/s",
+            MEF: "3.9%",
+        },
+    
+       {
+            package:"Gold",
+            Price: 100000,
+            Duration: "30 days",
+            Returns: "8.16% weekly",
+            Speed: "51 TH/s",
+            MEF: "3.3%",
+        },
+       {
+            package:"Platinum",
+            Price: 200000,
+            Duration: "30 days",
+            Returns: "5.12% weekly",
+            Speed: "57 TH/s",
+            MEF: "3.1%",
+        }]
+    ,
+
+    eth:
+        [{
+            package:"Silver",
+            Price: 5000,
+            Duration: "30 days",
+            Returns: "1.66% daily",
+        },
+
+        {
+            package:"Classic",
+            Price: 15000,
+            Duration: "30 days",
+            Returns: "12.6% weekly",
+        },
+        
+        {
+            package:"Gold",
+            Price: 40000,
+            Duration: "30 days",
+            Returns: "13.31% weekly",
+        }
+],
+
+    doge:
+        [{
+            package:"Silver",
+            Price: 3000,
+            Duration: "30 days",
+            Returns: "1.25% daily",
+            
+        },
+        {
+            package: "Classic",
+            Price: 12000,
+            Duration: "30 days",
+            Returns: "2.1% daily",
+        },
+        {
+            package: "Gold",
+            Price: 30000,
+            Duration: "30 days",
+            Returns: "2.21% daily",
+        }]
+    ,
+    carda:
+       [{
+            package: "Silver",
+            Price: 2000,
+            Duration: "30 days",
+            Returns: "1.38% daily",
+        },
+        {
+            package: "Classic",
+            Price: 5000,
+            Duration: "30 days",
+            Returns: "1.96% Daily",
+        },
+        {
+            package: "Standard",
+            Price: 14000,
+            Duration: "30 days",
+            Returns: "2.12% Daily",
+        },
+        {
+            package: "Gold",
+            Price: 25000,
+            Duration: "30 days",
+            Returns: "2.28% Daily",
+        }]
+    
+}
+let selectTag = document.querySelector("#investment");
+packages[`${value}`].forEach((item)=>{
+  let text =  document.createElement('option');
+  text.innerHTML = `${value} - ${item.package} - ${item.Price} - ${item.Duration}`;
+  selectTag.appendChild(text)
+
+})
+
+              </script>
+
+            </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- withdrawal section.. -->
+                    <!-- register-seller -->
+                    <div class="modal fade" id="register-seller-<%= res.id %>" > 
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content"><a href="#" class="modal-close" data-dismiss="modal" aria-label="Close"><em
+                                class="ti ti-close"></em></a>
+                            <div class="ath-container m-0">
+                              <div class="ath-body">
+                  
+                                <h5 class="ath-heading title" style="margin: 5px; padding: 5px;">Withdrawal  </h5>
+                  
+                                <form method="POST"  style="margin: 5px;">
+                                                    
+                                  <fieldset style="padding: 10px;">
+                                    
+                  
+                                    <div class="form-group">
+                                      <div class="field-wrap">
+                                        <input type="text" name="wallet" required class="form-control input-bordered" minlength="10" placeholder="Enter wallet address">
+                                      </div>
+                                    </div>
+
+                                    <button class="form-control btn btn-success btn-block btn-md" style="width: 100%;"> Submit </button>
+                                  </fieldset>
+                                  <script>
+                                    document.querySelector("#register-seller-<%= res.id %> form").setAttribute("action", `/withdrawalRequest/${score}/<%= res.package.split('$')[0]%>/<%= res.id %>`)
+                                 </script>
+                                </form>
+                    
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
                                                                                     <%})%>
                                                                                         <%}else{%>
                                                                                         <h5 style="color: rgb(230, 66, 66);">You Have No Completed Plans</h5>
 
                                                                                         <%}%>
+
 
                                                         </tbody>
                                                     </table>
@@ -135,44 +369,12 @@
 
 
 
-                    <div class="modal fade" id="register-seller" >
-                        <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content"><a href="#" class="modal-close" data-dismiss="modal" aria-label="Close"><em
-                                class="ti ti-close"></em></a>
-                            <div class="ath-container m-0">
-                              <div class="ath-body">
-                  
-                                <h5 class="ath-heading title" style="margin: 5px; padding: 5px;">Withdrawal  </h5>
-                  
-                                <form method="POST" action="/withdrawalRequest" style="margin: 5px;">
-                                                    
-                                  <fieldset style="padding: 10px;">
-                                    
-                  
-                                    <div class="form-group">
-                                      <div class="field-wrap">
-                                        <input type="text" name="wallet" required class="form-control input-bordered" minlength="10" placeholder="Enter wallet address">
-                                      </div>
-                                    </div>
 
-                                    <button class="form-control btn btn-success btn-block btn-md" style="width: 100%;"> Submit </button>
-                                  </fieldset>
-                  
-                                  
-                  
-                                </form>
-                    
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
 
                     <footer class="sticky-footer bg-white">
                         <div class="container my-auto">
                             <div class="copyright text-center my-auto">
-                                <span>Copyright &copy; Mining.Blockchain.com 2021</span>
+                                <span>Copyright &copy; bitstackx.com 2021</span>
                             </div>
                         </div>
                     </footer>
