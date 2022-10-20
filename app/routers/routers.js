@@ -3,20 +3,22 @@ const passport = require("passport");
 const usersRoutes = require("../controllers/user.controller");
 const adminRoutes = require("../controllers/admin.controller");
 const { autheticationMiddleware, adminMiddleWare } = require("../utils/auth");
-const { usersAuthRoutes, adminAuthRoutes } =  require("../utils/auth");
+const { usersAuthRoutes, adminAuthRoutes } = require("../utils/auth");
 
 const Routers = (app) => {
   return (routers = (paths, filename) => {
     app.post("/register", usersRoutes.RegisterUser);
     // app.post("/mining", autheticationMiddleware(), usersRoutes.MiningReceipts);
     app.post("/contactSubmit", usersRoutes.contactSubmit)
+    app.post("/forgetpassword", usersRoutes.resetPassword)
+    app.post("/confirmpassword", usersRoutes.confirmpassword)
     app.post("/changePassword", autheticationMiddleware(), usersRoutes.changePassword);
-    app.get("/register/:id", (req, res)=>res.redirect("/register"))
+    app.get("/register/:id", (req, res) => res.redirect("/register"))
     app.post("/withdrawalRequest/:amount/:coin/:product_id", autheticationMiddleware(), usersRoutes.withdrawalRequest);
     app.post("/reInvestRequest", autheticationMiddleware(), usersRoutes.reInvestRequest);
     app.get(paths, (req, res) => res.render(filename, { error: req.flash("error"), success: req.flash("success"), isAuthenticated: (req.isAuthenticated() && req.user.user_id) }));
     app.post("/login", passport.authenticate("login", { successRedirect: "/dashboard", failureRedirect: "back", failureFlash: true, successFlash: true, }));
-    app.post("/admin", passport.authenticate("admin", { successRedirect: "/adminDashboard",    failureRedirect: "/adminlogin", failureFlash: true, successFlash: true, })
+    app.post("/admin", passport.authenticate("admin", { successRedirect: "/adminDashboard", failureRedirect: "/adminlogin", failureFlash: true, successFlash: true, })
     );
   });
 }
@@ -34,6 +36,8 @@ module.exports = (app) => {
   Routers(app)("/pricing", "pricing");
   Routers(app)("/features", "features");
   Routers(app)("/register", "register");
+  Routers(app)("/forget_password", "forgetpassword");
+  Routers(app)("/confirm_password/:id", "confirmpassword");
   Routers(app)("/adminlogin", "adminlogin");
 
   userAuthRouters(app)("/minings", "MiningReceipts", usersRoutes);
@@ -46,10 +50,10 @@ module.exports = (app) => {
   userAuthRouters(app)("/setting", "setting", usersRoutes);
   userAuthRouters(app)("/mining/:id", "MiningPlans", usersRoutes)
   userAuthRouters(app)("/runningPlans", "runningPlans", usersRoutes)
-  userAuthRouters(app)('/removeplan/:id',"DeletePlan", usersRoutes)
-  userAuthRouters(app)('/withdrawal',"withdrawal", usersRoutes)
-  userAuthRouters(app)('/accountdeposit',"accountdeposit", usersRoutes);
-  userAuthRouters(app)('/history',"history", usersRoutes);
+  userAuthRouters(app)('/removeplan/:id/:amount/:package', "DeletePlan", usersRoutes)
+  userAuthRouters(app)('/withdrawal', "withdrawal", usersRoutes)
+  userAuthRouters(app)('/accountdeposit', "accountdeposit", usersRoutes);
+  userAuthRouters(app)('/history', "history", usersRoutes);
 
   adminAuthRouter(app)("/admin_logout", "logout", adminRoutes)
   adminAuthRouter(app)("/adminDashboard", "adminDashboard", adminRoutes)

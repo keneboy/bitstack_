@@ -242,6 +242,205 @@
               </div>
             </div>
           </div>
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">
+                TRON HISTORY
+              </h6>
+              
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table
+                  class="table table-bordered table-light"
+                  id="dataTable"
+                  width="100%"
+                  cellspacing="0"
+                >
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Amount</th>
+                      <th>Deposit Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+
+                    <%if(locals.trxRes){%>
+                      <% Object.values(trxRes).forEach(function(res) {%>
+
+                    <tr>
+                      <td> <%=res.id %> </td>
+                      <td> <%=res.amt %> </td>
+                      <td>
+                      <script>
+                          var todays = new Date(`<%= res.depositdate %>`);
+                          var dates = todays.getFullYear() + '-' + (todays.getMonth() + 1) + '-' + todays.getDate()
+                          document.write(dates)
+                      </script>
+                      </td>
+                      <td>
+                        <script>
+                          if(`<%=res.status %>` == 'Active'){
+                            document.write("Paid")
+                          }else{
+                            document.write("Pending Approval")
+                          }
+                      </script>
+                        </td>
+                      <!-- <td > <button data-toggle="modal"  data-target="#eth<%= res.id %>" class="btn btn-success btn-sm"> View</button>  </td>
+                      
+
+                      <td>
+                        <a class="btn btn-sm btn-danger" hrefs="/deletePlans/<%=res.id %>/<%=res.user_id %>"> Delete</a>
+                      </td> -->
+                    </tr>
+
+                    <div
+                      class="modal fade"
+                      id="trx<%= res.id %>"
+                      tabindex="-1"
+                      role="dialog"
+                      aria-labelledby="top<%= res.id %>"
+                      aria-hidden="true"
+                    >
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="top<%= res.id %>">Tron Payment receipts</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              <img src="<%= res.receiptImg %>"  class="img-fluid"/>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+                    </div>
+                    <%})%>
+                    <%}%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">
+                USDT_TRC20 HISTORY
+              </h6>
+              
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table
+                  class="table table-bordered table-light"
+                  id="dataTable"
+                  width="100%"
+                  cellspacing="0"
+                >
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Amount</th>
+                      <th>Deposit Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+
+                    <%if(locals.usdtRes){%>
+                      <% Object.values(usdtRes).forEach(function(res) {%>
+
+                    <tr>
+                      <td> <%=res.id %> </td>
+                      <td> <%=res.amt %> </td>
+                      <td>
+                      <script>
+                          var todays = new Date(`<%= res.depositdate %>`);
+                          var dates = todays.getFullYear() + '-' + (todays.getMonth() + 1) + '-' + todays.getDate()
+                          document.write(dates)
+                      </script>
+                      </td>
+                      <td>
+                        <script>
+                          if(`<%=res.status %>` == 'Active'){
+                            document.write("Paid")
+                          }else{
+                            document.write("Pending Approval")
+                          }
+                      </script>
+                        </td>
+                      <!-- <td > <button data-toggle="modal"  data-target="#eth<%= res.id %>" class="btn btn-success btn-sm"> View</button>  </td>
+                      
+
+                      <td>
+                        <a class="btn btn-sm btn-danger" hrefs="/deletePlans/<%=res.id %>/<%=res.user_id %>"> Delete</a>
+                      </td> -->
+                    </tr>
+
+                    <div
+                      class="modal fade"
+                      id="usdt<%= res.id %>"
+                      tabindex="-1"
+                      role="dialog"
+                      aria-labelledby="top<%= res.id %>"
+                      aria-hidden="true"
+                    >
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="top<%= res.id %>">Tron Payment receipts</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              <img src="<%= res.receiptImg %>"  class="img-fluid"/>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+                    </div>
+                    <%})%>
+                    <%}%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
          
          
          

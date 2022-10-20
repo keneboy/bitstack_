@@ -62,6 +62,8 @@
                               <h6> Ethereum <b>  $<%=res.ethacc%> </b> </h6>
                               <h6> Dogecoin <b>   $<%=res.dogeacc%> </b> </h6>
                               <h6> Cadano <b>   $<%=res.cadacc%> </b> </h6>
+                              <h6> Tron <b>   $<%=res.trxacc%> </b> </h6>
+                              <h6> Usdt_trc20 <b>   $<%=res.usdtacc%> </b> </h6>
 
                         
                           <%})%>
@@ -381,6 +383,12 @@
               <center>
                 <button data-toggle="modal" data-target="#accountCadanoDeposit" class="btn btn-md btn-secondary mb-3">Cardano</button>
               </center>
+              <center>
+                <button data-toggle="modal" data-target="#accountTronDeposit" class="btn btn-md btn-secondary mb-3">Tron</button>
+              </center>
+              <center>
+                <button data-toggle="modal" data-target="#accountUsdtDeposit" class="btn btn-md btn-secondary mb-3">Usdt_trc20</button>
+              </center>
               
               
             </div>
@@ -668,6 +676,146 @@
                 <div class="form-group">
                   <label>Upload Payment Receipts</label>
                   <input type="hidden" name="account" value="cadacc" />
+                  <input type="file" placeholder="Upload Payment Receipts" required="required" class="form-control" name="receipt" />
+                </div>
+
+                
+                  <button class="btn btn-primary" type="submit" style="width: 100%;"> TOP UP </button>
+             
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+  
+  </div>
+  <!-- TRON -->
+  <div
+    class="modal fade"
+    id="accountTronDeposit"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="accountTronDeposit"
+    aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="1">Cadano Account Deposit</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              
+              <form action="/accountdeposit" enctype="multipart/form-data" method="POST" >
+                <div class="card">
+                  <div class="card-body">
+                    <div class="feature card" style="padding: 10px">
+
+                      <small style="text-align: center;">
+                        <span style="color: rgb(34, 34, 209);"><b> Kindly deposit </b> </span> <br />
+                        <b style="color: black;"> to: <br /> <%=trxAdrr%> </b> 
+                        </small>
+
+                      <img class="img-fluid" src="<%=cadImg%>" />
+                      <!-- <button class="btn btn-primary btn-sm" data-toggle="modal"
+                      data-target="#payment" > Upload Payment Receipts
+
+                      </button> -->
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <input type="number" placeholder="Enter amount deposited" required="required" class="form-control" name="amt" />
+                </div>
+                
+                <div class="form-group">
+                  <label>Upload Payment Receipts</label>
+                  <input type="hidden" name="account" value="trxacc" />
+                  <input type="file" placeholder="Upload Payment Receipts" required="required" class="form-control" name="receipt" />
+                </div>
+
+                
+                  <button class="btn btn-primary" type="submit" style="width: 100%;"> TOP UP </button>
+             
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+  
+  </div>
+  <!-- USDT -->
+  <div
+    class="modal fade"
+    id="accountUsdtDeposit"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="accountUsdtDeposit"
+    aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="1">Usdt_trc20 Account Deposit</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              
+              <form action="/accountdeposit" enctype="multipart/form-data" method="POST" >
+                <div class="card">
+                  <div class="card-body">
+                    <div class="feature card" style="padding: 10px">
+
+                      <small style="text-align: center;">
+                        <span style="color: rgb(34, 34, 209);"><b> Kindly deposit </b> </span> <br />
+                        <b style="color: black;"> to: <br /> <%=usdtAdrr%> </b> 
+                        </small>
+
+                      <img class="img-fluid" src="<%=cadImg%>" />
+                      <!-- <button class="btn btn-primary btn-sm" data-toggle="modal"
+                      data-target="#payment" > Upload Payment Receipts
+
+                      </button> -->
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <input type="number" placeholder="Enter amount deposited" required="required" class="form-control" name="amt" />
+                </div>
+                
+                <div class="form-group">
+                  <label>Upload Payment Receipts</label>
+                  <input type="hidden" name="account" value="usdtacc" />
                   <input type="file" placeholder="Upload Payment Receipts" required="required" class="form-control" name="receipt" />
                 </div>
 

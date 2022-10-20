@@ -574,6 +574,234 @@
               </div>
             </div>
           </div>
+          <!-- TRON SECTION -->
+
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">
+                TRON DEPOSIT ACCOUNT
+              </h6>
+              
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table
+                  class="table table-bordered table-light"
+                  id="dataTable"
+                  width="100%"
+                  cellspacing="0"
+                >
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Amount</th>
+                      <th>Deposit Date</th>
+                      <th>Status</th>
+                      <th>Image</th>
+                      <th >Action1</th>
+                      <th >Action2</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+
+                    <%if(locals.trxRes){%>
+                      <% Object.values(trxRes).forEach(function(res) {%>
+
+                    <tr>
+                      <td> <%=res.user_id %> </td>
+                      <td> <%=res.amt %> </td>
+                      <td>
+                      <script>
+                          var todays = new Date(`<%= res.depositdate %>`);
+                          var dates = todays.getFullYear() + '-' + (todays.getMonth() + 1) + '-' + todays.getDate()
+                          document.write(dates)
+                      </script>
+                      </td>
+                      <td><%=res.status %></td>
+                      <td > <button data-toggle="modal"  data-target="#trx<%= res.id %>" class="btn btn-success btn-sm"> View</button>  </td>
+                      
+
+
+
+                      <td  style="font-size: x-small;" id="trxapp<%= res.id %>">
+                        <a id="trx<%= res.id %>" style="color: white;"></a>
+                        <script>
+                         if("<%= res.status %>" == "pending"){
+                            document.getElementById("trx<%= res.id %>").setAttribute("href", "/approvedeposit/<%= res.id %>/<%= res.user_id %>/trxacc")
+                            document.getElementById("trxapp<%= res.id %>").setAttribute("class", "btn btn-primary btn-sm")
+                            document.getElementById("trx<%= res.id %>").innerText = "wating approval"
+                          }else{
+                            document.getElementById("trxapp<%= res.id %>").setAttribute("disabled", "disable")
+                            document.getElementById("trx<%= res.id %>").innerText = "Paid"
+                            document.getElementById("trx<%= res.id %>").style.color = "black"
+                            document.getElementById("trx<%= res.id %>").style.fontSize = "18px"
+                          }
+                        </script>
+                      </td> 
+
+                      <td>
+                        <a class="btn btn-sm btn-danger" hrefs="/deletePlans/<%=res.id %>/<%=res.user_id %>"> Delete</a>
+                      </td>
+                    </tr>
+
+                    <div
+                      class="modal fade"
+                      id="trx<%= res.id %>"
+                      tabindex="-1"
+                      role="dialog"
+                      aria-labelledby="top<%= res.id %>"
+                      aria-hidden="true"
+                    >
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="top<%= res.id %>">Tron Payment receipts</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              <img src="<%= res.receiptImg %>"  class="img-fluid"/>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+                    </div>
+                    <%})%>
+                    <%}%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- USDT_TRC20 -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">
+                USDT_TRC20 DEPOSIT ACCOUNT
+              </h6>
+              
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table
+                  class="table table-bordered table-light"
+                  id="dataTable"
+                  width="100%"
+                  cellspacing="0"
+                >
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Amount</th>
+                      <th>Deposit Date</th>
+                      <th>Status</th>
+                      <th>Image</th>
+                      <th >Action1</th>
+                      <th >Action2</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+
+                    <%if(locals.usdtRes){%>
+                      <% Object.values(usdtRes).forEach(function(res) {%>
+
+                    <tr>
+                      <td> <%=res.user_id %> </td>
+                      <td> <%=res.amt %> </td>
+                      <td>
+                      <script>
+                          var todays = new Date(`<%= res.depositdate %>`);
+                          var dates = todays.getFullYear() + '-' + (todays.getMonth() + 1) + '-' + todays.getDate()
+                          document.write(dates)
+                      </script>
+                      </td>
+                      <td><%=res.status %></td>
+                      <td > <button data-toggle="modal"  data-target="#usdt<%= res.id %>" class="btn btn-success btn-sm"> View</button>  </td>
+                      
+
+
+
+                      <td  style="font-size: x-small;" id="usdtapp<%= res.id %>">
+                        <a id="usdt<%= res.id %>" style="color: white;"></a>
+                        <script>
+                         if("<%= res.status %>" == "pending"){
+                            document.getElementById("usdt<%= res.id %>").setAttribute("href", "/approvedeposit/<%= res.id %>/<%= res.user_id %>/usdtacc")
+                            document.getElementById("usdtapp<%= res.id %>").setAttribute("class", "btn btn-primary btn-sm")
+                            document.getElementById("usdt<%= res.id %>").innerText = "wating approval"
+                          }else{
+                            document.getElementById("usdtapp<%= res.id %>").setAttribute("disabled", "disable")
+                            document.getElementById("usdt<%= res.id %>").innerText = "Paid"
+                            document.getElementById("usdt<%= res.id %>").style.color = "black"
+                            document.getElementById("usdt<%= res.id %>").style.fontSize = "18px"
+                          }
+                        </script>
+                      </td> 
+
+                      <td>
+                        <a class="btn btn-sm btn-danger" hrefs="/deletePlans/<%=res.id %>/<%=res.user_id %>"> Delete</a>
+                      </td>
+                    </tr>
+
+                    <div
+                      class="modal fade"
+                      id="usdt<%= res.id %>"
+                      tabindex="-1"
+                      role="dialog"
+                      aria-labelledby="top<%= res.id %>"
+                      aria-hidden="true"
+                    >
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="top<%= res.id %>">Tron Payment receipts</h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              <img src="<%= res.receiptImg %>"  class="img-fluid"/>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+    </div>
+                    </div>
+                    <%})%>
+                    <%}%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
          
          
          

@@ -4,71 +4,72 @@ const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 exports.packagesPlans = async (result) => {
   let pending = [];
   let running = [];
-  var runningCounter=0 ,completedCounter=0, runningTotalAmt= 0;
-  if(result && Object.entries(result).length !== 0){
+  var runningCounter = 0, completedCounter = 0;
+  let runningTotalAmt = 0;
+  if (result && Object.entries(result).length !== 0) {
     for (var obj of result) { obj.status == "pending" ? pending.push(obj) : running.push(obj) }
   }
-  
+
   if (running.length) {
-    
+
     runningCounter = running.length;
-    
+
     for (var i = 0; i < running.length; i++) {
       let { Price, Duration, Returns } =
-      Packages[running[i].package.split("$")[0]][
+        Packages[running[i].package.split("$")[0]][
         running[i].package.split("$")[1]
-      ];
-      running[i].Price = Price;
+        ];
+      running[i].Price = running[i].accumulatedBalance ? running[i].accumulatedBalance : Price;
       running[i].Duration = Duration;
       running[i].Returns = Returns;
       running[i].package = running[i].package
-      .split("$")[0]
-      .toUpperCase()
-      .concat(`$${running[i].package.split("$")[1]}`);
-      
+        .split("$")[0]
+        .toUpperCase()
+        .concat(`$${running[i].package.split("$")[1]}`);
+
       var today = new Date();
       var now = today.getFullYear() +
-      "-" +
-      (today.getMonth() + 1) +
-      "-" +
-      today.getDate();
-      
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
+
       // var due_date = new Date(running[i].duedate);
-      var due_date =  new Date(parseFloat(running[i].countDownDate))       
+      var due_date = new Date(parseFloat(running[i].countDownDate))
       runningTotalAmt += returnOfInvestment(
         running[i].Duration,
         running[i].Returns,
         running[i].Price,
         now,
         due_date
-        );
-        
-        ExpireddDate =
+      );
+
+      ExpireddDate =
         due_date.getFullYear() +
         "-" +
         (due_date.getMonth() + 1) +
         "-" +
 
         due_date.getDate();
-        
-        // if (ExpireddDate < now) {
-          if (due_date < today) {
-            completedCounter++;
-            runningTotalAmt = 0;
-            running[i].status = "Completed";
-            runningCounter -= 1;
-            runningTotalAmt += returnOfInvestment(
-              running[i].Duration,
-              running[i].Returns,
-              running[i].Price,
-              now,
-              due_date
-              );
-              // runningTotalAmt += returnRunningTime(runningTotalAmt, amountDeducted)
-            }
-          }
-        }
-        return {
+
+      // if (ExpireddDate < now) {
+      // if (due_date < today) {
+      //   completedCounter++;
+      //   runningTotalAmt = 0;
+      //   running[i].status = "Completed";
+      //   runningCounter -= 1;
+      //   runningTotalAmt += returnOfInvestment(
+      //     running[i].Duration,
+      //     running[i].Returns,
+      //     running[i].Price,
+      //     now,
+      //     due_date
+      //     );
+      //     // runningTotalAmt += returnRunningTime(runningTotalAmt, amountDeducted)
+      //   }
+    }
+  }
+  return {
     pending,
     running,
     runningCounter,
@@ -98,10 +99,12 @@ const returnOfInvestment = (
   let totalDue = parseInt(duration.split(" ")[0]);
   let result = 0;
 
-  returnStr.split("%")[1] == "weekly" ?  totalDue = parseInt(duration.split(" ")[0])/7 : totalDue;
 
-  if(perdayInterest <= 0){
-    return result = ((parseFloat(returnStr.split("%")[0]) / 100)  * price *  totalDue) + price;
+  if (returnStr.split("%")[1] == "weekly") {
+    totalDue = parseInt(duration.split(" ")[0]) / 7
+  }
+  if (perdayInterest <= 0) {
+    return result = ((parseFloat(returnStr.split("%")[0]) / 100) * price * totalDue) + price;
   }
 
   else if (returnStr.split("%")[1].trim() == returnDays[0]) {
@@ -120,14 +123,14 @@ function dateDiffInDays(a, b) {
   return Math.floor((utc2 - utc1) / _MS_PER_DAY);
 }
 
-exports.validateWithdrawalRequest=async(result)=>{
+exports.validateWithdrawalRequest = async (result) => {
   let outPut = [];
-  if(result){
+  if (result) {
     result.forEach(element => {
-       if(element.status == "Completed" ){
-            outPut.push(element)
+      if (element.status == "Completed") {
+        outPut.push(element)
       }
     });
   }
-  return  {outPut}
+  return { outPut }
 }

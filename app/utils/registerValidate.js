@@ -12,12 +12,28 @@ exports.Register = (userObj) => {
     // username: Joi.string().alphanum().min(3).max(30).required(),
 
     password: Joi.string()
-      .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
+      .pattern(/(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$#%~%^&*-]).{8,}/)
       .required(),
 
     repeat_password: Joi.ref("password"),
     email: Joi.string().email().required(),
   });
-    let result = schema.validate(userObj);
-    return result;
+  let result = schema.validate(userObj);
+  return result;
+}
+
+exports.updatePassword = (userObj) => {
+  const schema = Joi.object({
+    id: Joi.allow(),
+    // username: Joi.string().alphanum().min(3).max(30).required(),
+
+    password: Joi.string()
+      .pattern(/(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$#%~%^&*-]).{8,}/)
+      .required(),
+    vCode: Joi.number().required(),
+    repeat_password: Joi.ref("password"),
+    email: Joi.string().email().required(),
+  });
+  let result = schema.validate(userObj);
+  return result;
 }

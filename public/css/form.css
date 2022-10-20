@@ -1,0 +1,15 @@
+.field__wrapper{
+    display: flex;
+}
+
+.field__wrapper > *{
+    flex:1;
+}
+.field__wrapper > *:first-child{
+    margin-right:10px;
+}
+
+.ath-container.added{
+    max-width: 550px;
+    width:100%;
+}

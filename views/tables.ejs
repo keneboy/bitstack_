@@ -93,9 +93,34 @@
                                                                                         <td>
                                                                                             <%= res.package.split("$")%>
                                                                                         </td>
-                                                                                        <td
+                                                                                        <td id="bash<%= res.id %>"
                                                                                             class="btn btn-success btn-sm">
                                                                                             <%= res.status %>
+                                                                                            <script>
+                                                                                                // console.log(countDownDate - new Date().getTime())
+                                                                                                var x = setInterval(function () {
+                                                                                                    // var countDownDate = new Date(`<%= res.duedate %>`).getTime();
+                                                                                                   var countDownDate = parseFloat(`<%= res.countDownDate %>`)
+                                                                                                    
+                                                                                                        var now = new Date().getTime();
+                    
+                                                                                                        var distance = countDownDate - now;
+
+                                                                                                        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                                                                                                        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                                                                                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                                                                                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                                                                                                        var nowDate =  days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+                                                                                                       
+                                                                                                        if (distance < 0) {
+                            
+                                                                                                            document.getElementById("bash<%= res.id %>").innerHTML = "Completed"
+                                                                                                        }
+                                                                                                        else{
+                                                                                                            document.getElementById("bash<%= res.id %>").innerHTML = "Active"
+                                                                                                        }
+                                                                                                    }, 1000);
+                                                                                            </script>
                                                                                         </td>
                                                                                         <td>
                                                                                             <%= res.Price %> USD
@@ -113,7 +138,7 @@
                                                                                                 // console.log(countDownDate - new Date().getTime())
                                                                                                 var x = setInterval(function () {
                                                                                                     // var countDownDate = new Date(`<%= res.duedate %>`).getTime();
-                                                                                                   let countDownDate = parseFloat(`<%= res.countDownDate %>`)
+                                                                                                   var countDownDate = parseFloat(`<%= res.countDownDate %>`)
                                                                                                     
                                                                                                         var now = new Date().getTime();
                     
@@ -140,7 +165,7 @@
                                                                                             <%= res.Returns %>
                                                                                         </td>
                                                                                         <td>
-                                                                                            <a class="btn btn-primary btn-sm" href="/removeplan/<%= res.id %>">Delete</a>
+                                                                                            <a class="btn btn-primary btn-sm" href="/removeplan/<%= res.id %>/<%= res.Price %>/<%= res.package.split('$')%>">Delete</a>
                                                                                         </td>
                                                                                       
                                                                                         

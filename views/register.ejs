@@ -7,7 +7,7 @@
   
       <main class="nk-pages nk-pages-centered bg-theme" style="background-color: #121d33 !important;     
        background-image: url(images/hero-gradient.svg);">
-        <div class="ath-container">
+        <div class="ath-container added">
           <div class="ath-header text-center">
             <a href="/" class="logo-link" intl="[object Object]"
             >
@@ -49,7 +49,7 @@
           </div>
 <!-- header end -->
 
-<div class="ath-body">
+<div class="ath-body form_reg">
   <h5 class="ath-heading title">Sign Up
      <small class="tc-default">Create New Mining Account</small>
     
@@ -57,13 +57,14 @@
 
     <small class="tc-default" style="color: rgb(241, 67, 67) !important" > <%if(error){%> <%=error%> <%}%> </small>
          
-    <form action="/register" method="POST">
+    <form action="/register" method="POST" >
  
       <div class="field-wrap">
               <input type="text" class="input-bordered" placeholder="Full name" name="fullname" required />
-          </div>
-      <br/>                
-      <div class="field-item">
+      </div>
+      <br/>    
+      <div class="field__wrapper" >
+        <div class="field-item">
           <div class="field-wrap">
               <input type="email" class="input-bordered" placeholder="Email" name="email" required />
           </div>
@@ -72,16 +73,98 @@
           <div class="field-wrap">
               <input type="number" class="input-bordered" placeholder="Mobile" name="phone" required />
           </div>
-                </div>
-      <div class="field-item">
-          <div class="field-wrap">
-              <input type="password" class="input-bordered" placeholder="Password" name="password" required />
-          </div>
       </div>
+      </div>            
 
       <div class="field-item">
           <div class="field-wrap">
-              <input type="password" class="input-bordered" placeholder="Password" name="repeat_password" required />
+              <input type="password" class="input-bordered password" placeholder="Password" name="password" required />
+          </div>
+          <ul style="list-style: none">
+            <p style="font-size: 14px; font-style: italic;">Password should have the following:</p>
+            <li class="passwordbtx uppercase" ><i class="fa-solid fa-circle-check" ></i> <span>an uppercase character</span></li>
+                <li class="passwordbtx lowercase"><i class="fa-solid fa-circle-check"></i> <span>a lowercase character</span> </li>
+                <li class="passwordbtx number"><i class="fa-solid fa-circle-check"></i> <span>a number</span> </li>
+                <li class="passwordbtx special_character"><i class="fa-solid fa-circle-check"></i> <span>a special character or symbol (!@#$%*&)</span> </li>
+                <li class="passwordbtx length"><i class="fa-solid fa-circle-check"></i> <span> minimum of eight(8) characters </span> </li>
+          </ul>
+          <script>
+             let passwordDom = document.querySelector(".password");
+    let listItem = document.querySelector("#listItem");
+
+
+
+    // the password combination-------
+    let uppercase =  document.querySelector(".uppercase");
+    let lowercase =  document.querySelector(".lowercase");
+    let number =  document.querySelector(".number");
+    let specialCharacter =  document.querySelector(".special_character");
+    let length =  document.querySelector(".length");
+ 
+
+    passwordDom.addEventListener("keyup", (e)=>{
+        let {value} = e.target;
+        let regexUppercase = /(?=.*?[A-Z])/g;
+        let regexLowercase =/(?=.*?[a-z])/g;
+        let regexNumber = /[0-9]{1,}/g;
+        let regexSpecialCharacter = /(?=.*?[#?!@$#%~%^&*-])/g;
+        let regexLength = /.{8,}/gs;
+
+        let pattern =/(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$#%~%^&*-]).{8,}/
+        
+
+        if(regexUppercase.test(value)){
+           uppercase.classList.add("green")
+        }
+        else{
+            uppercase.classList.remove("green")
+        }
+
+        if(regexLowercase.test(value)){
+           lowercase.classList.add("green")
+        }
+        else{
+            lowercase.classList.remove("green")
+        }
+        if(regexNumber.test(value)){
+           number.classList.add("green")
+        }
+        else{
+            number.classList.remove("green")
+        }
+        if(regexSpecialCharacter.test(value)){
+           specialCharacter.classList.add("green")
+        }
+        else{
+            specialCharacter.classList.remove("green")
+        }
+        if(regexLength.test(value)){
+           length.classList.add("green")
+        }
+        else{
+            length.classList.remove("green")
+        }
+
+ // disabled the button until the pattern is meant...
+ let submitButton = document.querySelector("button.submit");
+        if(pattern.test(value)){
+            // submitButton.style.background = "red";
+            submitButton.disabled = false;
+            submitButton.style.cursor = "pointer"
+        }
+        else{
+            submitButton.disabled = true;
+            submitButton.style.cursor = "auto"
+        }
+       
+    })
+          </script>
+      </div>
+
+
+      <div class="field-item">
+          <div class="field-wrap">
+              <input type="password" class="input-bordered" placeholder="Confirm Password" name="repeat_password" required />
           </div>
       </div>
 
@@ -93,7 +176,7 @@
             </label>
       </div>
             
-      <button class="btn btn-primary btn-block btn-md w-100" type="submit">Sign Up</button>
+      <button class="btn btn-primary btn-block btn-md w-100 submit" type="submit">Sign Up</button>
   </form>
 
   </div>

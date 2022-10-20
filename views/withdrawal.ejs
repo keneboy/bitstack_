@@ -69,6 +69,7 @@
                                                                                         </td>
                                                                                         <td>
                                                                                             <%= res.Price %> USD
+                                                                                            
                                                                                         </td>
                                                                                         <td>
                                                                                             <script>
@@ -109,21 +110,20 @@
                                                                                         <td>
                                                                                             
                                                                                             <script>
-                                                                                                let packageRate = `<%= res.Returns %>`;
-                                                                                                let package = packageRate.split(/[%]/ig);
-                                                                                                let rate = parseFloat(package[0]);
-                                                                                                let period = package[1].trim();
-                                                                                                let duration = 30;
-                                                                                                let amount = parseFloat(` <%= res.Price %>`)
-                                                                                                    let score;
+                                                                                                var amount, packageRate, package, rate, period, duration, score;
+                                                                                                amount = parseFloat('<%= res.Price %>')
+                                                                                                packageRate = `<%= res.Returns %>`;
+                                                                                                package = packageRate.split(/[%]/ig);
+                                                                                                rate = parseFloat(package[0]);
+                                                                                                period = package[1].trim()
+                                                                                                duration = 30
                                                                                                 if(period === "daily"){
-                                                                                                     score = (((rate/ 100) * amount * duration) + amount );
-                                                                                                    // document.write(`${score + amount } USD`)
+                                                                                                     score = (((rate / 100) * amount * duration) + amount );
                                                                                                 }
                                                                                                 if(period === "weekly"){
-                                                                                                     score = (((rate/ 100) * amount * duration * (1/7)) + amount);
-                                                                                                    // document.write(`${score + amount } USD`)
+                                                                                                     score = (((rate / 100) * amount * duration * (1/7)) + amount);
                                                                                                 }
+                                                                                              
                                                                                                 document.write(`${score} USD`)
                                                                                     
                                                                                             </script>

@@ -4,13 +4,13 @@ const { Packages, imageParams } = require("../utils/packages");
 
 
 exports.adminDashboard = async (req, res) => {
-  await db.getUserInfo((err, users, receipts, newletter, withResponse, btcRes, ethRes, dogeRes, cadRes, paymentHistoryRes) => {
+  await db.getUserInfo((err, users, receipts, newletter, withResponse, btcRes, ethRes, dogeRes, cadRes, trxRes, usdtRes, paymentHistoryRes) => {
     if (err) return res.render("admin", { err, error: req.flash("error") });
     else {
       // console.log(withResponse)
       res.render("admin", {
         result: users,
-        receipts, btcRes, ethRes, dogeRes, cadRes,
+        receipts, btcRes, ethRes, dogeRes, cadRes, trxRes, usdtRes,
         newletter, withResponse, paymentHistoryRes,
         error: req.flash("error"),
         emailDel: req.flash("error")
@@ -87,28 +87,28 @@ exports.removemsg = async (req, res) => {
 exports.approvedUserWithdrawal = async (req, res) => {
   let { withdrawalID, email, userID, crypto, amount, product_id } = req.params;
   let deposit_date = new Date();
-await db.checkIfAlreadyApproved(userID,product_id, async(err, result)=>{
-  if (err) return req.flash("error", "network error"), res.redirect("back");
-  if(result && result.length > 0){
-    req.flash("error", "already verified");
-    res.redirect("back")
-  }
-  else{
-    await db.createPaymentHistoryLog(deposit_date, userID, product_id, amount, crypto, "paid", async (err, result) => {
-      if (err) return req.flash("error", "network error"), res.redirect("back");
-      await db.updateUserWithdrawal(parseFloat(withdrawalID), parseFloat(userID), async (err, result) => {
+  await db.checkIfAlreadyApproved(userID, product_id, async (err, result) => {
+    if (err) return req.flash("error", "network error"), res.redirect("back");
+    if (result && result.length > 0) {
+      req.flash("error", "already verified");
+      res.redirect("back")
+    }
+    else {
+      await db.createPaymentHistoryLog(deposit_date, userID, product_id, amount, crypto, "paid", async (err, result) => {
         if (err) return req.flash("error", "network error"), res.redirect("back");
-        await db.deleteMiningReceipts(product_id, async (err, result) => {
+        await db.updateUserWithdrawal(parseFloat(withdrawalID), parseFloat(userID), async (err, result) => {
           if (err) return req.flash("error", "network error"), res.redirect("back");
-          req.flash("error", "withdrawal is approved");
-          res.redirect("back");
+          await db.deleteMiningReceipts(product_id, async (err, result) => {
+            if (err) return req.flash("error", "network error"), res.redirect("back");
+            req.flash("error", "withdrawal is approved");
+            res.redirect("back");
+          })
         })
+
       })
-  
-    })
-  
-  }
-})
+
+    }
+  })
 
 };
 
